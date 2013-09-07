@@ -1,0 +1,7 @@
+<resources>
+
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="list_vertical_margin">6dp</dimen>
+    <dimen name="list_hori_margin">8dp</dimen>
+
+</resources>

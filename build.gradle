@@ -1,0 +1,35 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.4'
+    }
+}
+apply plugin: 'android'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile project(':C::Users:605577709:Desktop:Java + Android:facebook-facebook-android-sdk-b751bd3:facebook')
+    compile project(':C::Users:605577709:Desktop:Java + Android:JakeWharton-ActionBarSherlock-e5c2d1c:library')
+    compile project(':C::Users:605577709:Desktop:Java + Android:ViewPagerIndicator:library1')
+}
+
+android {
+    compileSdkVersion 14
+    buildToolsVersion "17.0.0"
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        instrumentTest.setRoot('tests')
+    }
+}

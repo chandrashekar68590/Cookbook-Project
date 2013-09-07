@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="love.cookbook.FirstPage"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="10" />
+    <supports-screens                                 
+    android:smallScreens="true"                    
+    android:normalScreens="true"         
+    android:largeScreens="false"            
+    android:xlargeScreens="false"             
+    android:anyDensity="true" />
+
+    <application
+        android:icon="@drawable/cookbook_logo"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock">
+        <activity
+            android:name=".FirstPageActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">  
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainCourseTab"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ListViewSampleActivity"
+            android:screenOrientation="portrait">
+        </activity>
+          <activity android:name=".SampleMethodActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".GalleryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".GalleryTabActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".SearchActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".MethodActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".IngredientActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        
+        
+    </application>
+    
+	<!-- Permission set to access Internet -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    
+    <!-- Permission set to access Vibration mode of a phone -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    
+    <!-- Permission set to Send SMS from our application -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    
+    <!-- Permission set to Receive SMS from other phone -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    
+    <!-- Permission to communicate request and response messsages to google play's billing service -->
+    <uses-permission android:name="com.android.vending.BILLING" />
+    
+</manifest>

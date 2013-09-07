@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello1"><i>This is second window</i></string>
+    <string name="app_name1">Cookbook</string>
+    <string-array name="dishes">
+        <item>Paneer Chilly</item>
+        <item>Paneer Kadai</item>
+        <item>Gajar Halwa</item>
+      
+    </string-array>
+</resources>
