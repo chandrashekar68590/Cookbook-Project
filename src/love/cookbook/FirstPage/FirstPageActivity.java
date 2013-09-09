@@ -22,7 +22,6 @@ public class FirstPageActivity extends Activity {
 	
 	Intent intent;
 	
-	
 	NotificationManager notificationManager;
 	
 	private MySqliteHelper dbHelper;

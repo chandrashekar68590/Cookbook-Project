@@ -1,12 +1,14 @@
 package love.cookbook.FirstPage;
 
-import love.cookbook.FirstPage.IngredienceLazyAdapter.ViewHolder;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 	public class LazyAdapter extends BaseAdapter {
 	    
@@ -17,16 +19,18 @@ import android.widget.*;
 	    private String[] lock;
 	    private String[] nonVeg;
 	    private int [] images;
+	    private Bitmap [] bitmapImages;
 	    ViewHolder holder;
 	    private static LayoutInflater inflater=null; 
 	    
-	    public LazyAdapter(Activity a, String[] dishes, String[] recipeDescription,String[] timeToPrepare,int [] images,String [] lock,String [] nonVeg) {
+	    public LazyAdapter(Activity a, String[] dishes, String[] recipeDescription,String[] timeToPrepare,Bitmap [] bitmapImages,String [] lock,String [] nonVeg) {
 	    	activity = a;
 	        this.dishes=dishes;
 	        this.images=images;
 	        this.recipeDescripion=recipeDescription;
 	        this.timeToPrepare=timeToPrepare;
 	        this.lock=lock;
+	        this.bitmapImages = bitmapImages;
 	        this.nonVeg=nonVeg;
 	        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    }
@@ -52,7 +56,7 @@ import android.widget.*;
 
 
 	        holder.textView1.setText(dishes[position]);
-	        holder.image.setImageResource(images[position]);
+	        holder.image.setImageBitmap(bitmapImages[position]);
 	        holder.textView2.setText(recipeDescripion[position]);
 	        holder.textView3.setText(timeToPrepare[position]); 
 	        /*

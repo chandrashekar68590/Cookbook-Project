@@ -1,5 +1,7 @@
 package love.cookbook.FirstPage;
 
+import android.graphics.Bitmap;
+
 public class ARRAY {
 
 	public static String dishes [];
@@ -12,6 +14,7 @@ public class ARRAY {
 	public static String nonVeg [];
 	public static String isFavourite [];
 	public static String recipeID [];
+	public static Bitmap bitmapImages [];
 	
 	public static String ingredients [];
 	public static String ingredientsHindiname [];

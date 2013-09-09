@@ -25,13 +25,21 @@
     </ListView>
 
      <Button
-        android:id="@+id/methodButton"
-        android:layout_width="79dp"
-        android:layout_height="30dp"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/toggle_method" />
+         android:id="@+id/methodButton"
+         android:layout_width="79dp"
+         android:layout_height="30dp"
+         android:layout_above="@+id/listView1"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentTop="true"
+         android:layout_marginRight="90dp"
+         android:background="@drawable/toggle_method" />
+
+     <Button
+         android:id="@+id/button1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/listView1"
+         android:layout_toLeftOf="@+id/methodButton"
+         android:background="@drawable/toggle_ingredients" />
 
 </RelativeLayout>

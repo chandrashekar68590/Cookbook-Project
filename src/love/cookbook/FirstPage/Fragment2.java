@@ -3,6 +3,7 @@ package love.cookbook.FirstPage;
 import android.annotation.SuppressLint;
 import android.content.*;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -21,7 +22,7 @@ public class Fragment2 extends SherlockFragment {
 	
 	public String catagory;
 	public String subCatagory2;
-	
+	private BitmapDecoder bitmapDecoder;
 	public String packageName;
 	
 	String eachIngredientsImageName [];
@@ -56,6 +57,7 @@ public class Fragment2 extends SherlockFragment {
         firstPage = new FirstPageActivity();
         mainCourseTab = new MainCourseTab();
         fragment1 = new Fragment1();
+        bitmapDecoder = new BitmapDecoder();
         
 		SharedPreferences settings = getActivity().getSharedPreferences(VARIABLES.PREFS_NAME, 0);
 		if(settings.getString("SpinnerChoice", "Sort By Default").equals("Sort By Default")){
@@ -78,14 +80,12 @@ public class Fragment2 extends SherlockFragment {
 		//final FirstPageActivity firstPage = new FirstPageActivity();
 		
 		ARRAY.image = new int[ARRAY.gridImageName.length];
+		ARRAY.bitmapImages = new Bitmap[ARRAY.gridImageName.length];
 
         packageName=this.getActivity().getPackageName();
-        for(int i=0;i<ARRAY.gridImageName.length;i++){
-        	ARRAY.image[i]=getResources().getIdentifier(ARRAY.gridImageName[i].toLowerCase(), "drawable", packageName);
-        	//if(ARRAY.image[i]==0)
-        		//ARRAY.image[i]= 2130837507;
-        }
-		
+        for(int i=0;i<ARRAY.gridImageName.length;i++)
+        	ARRAY.bitmapImages[i] = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), getResources().getIdentifier(ARRAY.gridImageName[i].toLowerCase(), "drawable", packageName), 100, 91);
+
 		View v1 = inf.inflate(R.layout.list_main, grp, false);
 		list = (ListView)v1.findViewById(android.R.id.list);
         
@@ -96,7 +96,7 @@ public class Fragment2 extends SherlockFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
         
-		adapter=new LazyAdapter	(getActivity(), ARRAY.dishes,ARRAY.description,ARRAY.timeToPrepareString,ARRAY.image,ARRAY.lock,ARRAY.nonVeg);
+		adapter=new LazyAdapter	(getActivity(), ARRAY.dishes,ARRAY.description,ARRAY.timeToPrepareString,ARRAY.bitmapImages,ARRAY.lock,ARRAY.nonVeg);
         list.setAdapter(adapter);
         
        	list.setOnItemClickListener(new OnItemClickListener(){

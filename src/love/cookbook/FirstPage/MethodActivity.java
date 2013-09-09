@@ -6,15 +6,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.*;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.os.*;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.util.SparseBooleanArray;
-import android.view.*;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -24,6 +35,7 @@ public class MethodActivity extends SherlockActivity {
 	public MethodLazyAdapter adapter;
 	View vi;
 	public int noOfSteps;
+	Button ingredientsButton;
     private static LayoutInflater inflater=null; 
     public Boolean tick [];
     
@@ -59,6 +71,16 @@ public class MethodActivity extends SherlockActivity {
 	        
 	        for(int i =0;i<tick.length;i++)
 	        	tick[i] = false;
+	        
+	        ingredientsButton = (Button)findViewById(R.id.ingredientsButton);
+	        ingredientsButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					onBackPressed();
+				}
+			});
 	        
 	        final ListView list = (ListView)findViewById(R.id.listView1);
 	        

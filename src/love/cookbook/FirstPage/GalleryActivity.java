@@ -5,7 +5,10 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,17 +26,20 @@ public class GalleryActivity extends SherlockActivity {
 
 	int cursorEnd,cursorCount;
 	public String packageName;
+	private BitmapDecoder bitmapDecoder;
 	
 	String eachIngredientsImageName [];
 
 	
 	final MySqliteHelper dbHelper = new MySqliteHelper(this);
 	final FirstPageActivity firstPage = new FirstPageActivity();
+	   
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);       
         setContentView(R.layout.grid);
         
+        bitmapDecoder = new BitmapDecoder();
 	    GridView gridview = (GridView)findViewById(R.id.gridView);
 	    
 	      SharedPreferences settings = getSharedPreferences(VARIABLES.PREFS_NAME, 0);
@@ -46,27 +52,43 @@ public class GalleryActivity extends SherlockActivity {
 		
 	    
 	    ARRAY.imageIngredientsName = new String [cur.getCount()];
-	    ARRAY.recipeName = new String [cur.getCount()];
 	    ARRAY.imageIngredientsName = firstPage.createDishArray(cur, "ZIMAGE");
+	    
+	    ARRAY.recipeName = new String [cur.getCount()];
 	    ARRAY.recipeName = firstPage.createDishArray(cur, "ZNAME");
+	    
+	    ARRAY.nonVeg = new String[cur.getCount()];
+		ARRAY.nonVeg = firstPage.createDishArray(cur, VARIABLES.nonVegColumn);
+	    
+	    ARRAY.timeToPrepare = new String[cur.getCount()];
+	    ARRAY.timeToPrepare = firstPage.createDishArray(cur, VARIABLES.columnName3);
+	    
+	    ARRAY.timeToPrepareString = new String[cur.getCount()];
+  		
+		for(int i=0;i<ARRAY.timeToPrepare.length;i++){
+			if(ARRAY.timeToPrepare[i].equals("30"))
+				ARRAY.timeToPrepareString[i] = "Around 30 mins";
+			else if(ARRAY.timeToPrepare[i].equals("60"))
+				ARRAY.timeToPrepareString[i] = "Around an Hour";
+			else if(ARRAY.timeToPrepare[i].equals("90"))
+				ARRAY.timeToPrepareString[i] = "Around 90 mins";
+		}
 	    
 	    for(int i=0;i<ARRAY.imageIngredientsName.length;i++){
 	    	ARRAY.imageIngredientsName[i]=ARRAY.imageIngredientsName[i].toLowerCase();
 	    }
 	    
-	    ARRAY.imageIngredientsID = new int[ARRAY.imageIngredientsName.length];	    
+	    ARRAY.imageIngredientsID = new int[ARRAY.imageIngredientsName.length];	  
+	    ARRAY.bitmapImages = new Bitmap[ARRAY.imageIngredientsName.length];
 	    
 	    packageName=this.getPackageName();
-        for(int i=0;i<ARRAY.imageIngredientsID.length;i++){
-        	ARRAY.imageIngredientsID[i]=getResources().getIdentifier(ARRAY.imageIngredientsName[i], "drawable", packageName);
-        	if(ARRAY.imageIngredientsID[i]==0)
-        		ARRAY.imageIngredientsID[i]= 2130837507;
-        }
+        for(int i=0;i<ARRAY.imageIngredientsID.length;i++)
+        	ARRAY.bitmapImages[i] = bitmapDecoder.decodeSampledBitmapFromResource(getResources(), getResources().getIdentifier(ARRAY.imageIngredientsName[i], "drawable", packageName), 130, 90);
         
         cur.close();
         dbHelper.close();
 	    
-	    adapter=new ImageAdapter(this,ARRAY.imageIngredientsID);
+	    adapter=new ImageAdapter(this,ARRAY.bitmapImages,ARRAY.timeToPrepareString,ARRAY.nonVeg);
         gridview.setAdapter(adapter);
 	    gridview.setOnItemClickListener(new GridViewClickListener());
 	    

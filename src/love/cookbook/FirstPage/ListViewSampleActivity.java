@@ -2,16 +2,29 @@ package love.cookbook.FirstPage;
 
 
 
+import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.MenuItem;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.*;
-import android.view.*;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.*;
 
 public class ListViewSampleActivity extends SherlockListActivity {
+	
+    
+    ListView list;
+    
 	LazyAdapter adapter;
 	
 	public String packageName;
@@ -20,6 +33,7 @@ public class ListViewSampleActivity extends SherlockListActivity {
 	
 	public MySqliteHelper dbHelper;
 	Cursor cur;
+	
 	
 	String eachIngredientsImageName [];
 
@@ -30,17 +44,23 @@ public class ListViewSampleActivity extends SherlockListActivity {
         	Toast.makeText(getBaseContext(), "Facebook updated !", Toast.LENGTH_LONG).show();
         }
     };
-	
+
+	private BitmapDecoder bitmapDecoder;
+    
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	Intent intent = getIntent();
+    	bitmapDecoder = new BitmapDecoder();
     	
         super.onCreate(savedInstanceState);
        // requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.list_main);
 		dbHelper = new MySqliteHelper(this);
+		
+		list=(ListView)findViewById(android.R.id.list);
+		
 		final FirstPageActivity firstPage = new FirstPageActivity();
 		
         //com.actionbarsherlock.app.ActionBar ab = getSupportActionBar();
@@ -59,18 +79,18 @@ public class ListViewSampleActivity extends SherlockListActivity {
          * This code snippet is used to fetch the image id from the resource folder from the name fetched from database.
          */
         ARRAY.image = new int[ARRAY.imageName.length];
+        ARRAY.bitmapImages = new Bitmap[ARRAY.imageName.length];
         
         packageName=this.getPackageName();
-        for(int i=0;i<ARRAY.imageName.length;i++){
-        	ARRAY.image[i]=getResources().getIdentifier(ARRAY.imageName[i].toLowerCase(), "drawable", packageName);
-        	//if(ARRAY.image[i]==0)
-        	//	ARRAY.image[i]= 2130837507;
-        }
+        for(int i=0;i<ARRAY.imageName.length;i++)
+        	ARRAY.bitmapImages[i] = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), getResources().getIdentifier(ARRAY.imageName[i].toLowerCase(), "drawable", packageName), 100, 91);
+                        
+       //new backgroundLoadListView().execute();
         
-       final ListView list=(ListView)findViewById(android.R.id.list);
       // list.setEnabled(false);
+      
        
-        adapter=new LazyAdapter	(this, ARRAY.dishes,ARRAY.description,ARRAY.timeToPrepare,ARRAY.image,ARRAY.lock,ARRAY.nonVeg);
+        adapter=new LazyAdapter	(this, ARRAY.dishes,ARRAY.description,ARRAY.timeToPrepare,ARRAY.bitmapImages,ARRAY.lock,ARRAY.nonVeg);
         list.setAdapter(adapter);
         
         getListView().setDivider(null);
