@@ -1,29 +1,51 @@
 package love.cookbook.FirstPage;
 
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 public class SampleMethodActivity extends Activity {
-	Button b;
+	Button b,b1;
+	public int width,height,bottom;
+	 LinearLayout ll;
 
     public void onCreate(Bundle savedInstanceState) {
 
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_method);
+                
+        ll = (LinearLayout) findViewById(R.id.my_linear_layout);
         
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.my_layout);
+       
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        	params.setMargins(0, 12, 0, 40);
 
         b = new Button(this);
-        b.setText("This is a sample text to check the width and height of a button");
-        b.setX(50);
-        b.setY(50);
-        b.setWidth(500);
-        rl.addView(b);
+        b.setText("This is a sample text");
+       // b.setX(50);
+        //b.setY(50);
+        //b.setWidth(500);
+        b.setLayoutParams(params);
+        b.setGravity(Gravity.CENTER);
+        ll.addView(b);
+   	
+              
+        b1 = new Button(this);
+        b1.setText("This is a sample text to chck the width and height of a button1 and need to check how long it gets stretched and to check the width");
+        b1.setLayoutParams(params);
+        b1.setGravity(Gravity.CENTER);
+        ll.addView(b1);
         
-        System.out.println("The y is: "+b.getY());
-        System.out.println("The height is "+ b.getBottom());
+   
+        
+        //System.out.println("The y is: "+b.getY());
+        //System.out.println("in oncreate Width: "+b.getDrawingCache().getWidth()+" height: "+b.getDrawingCache().getHeight());
+
       //  b.setLayoutParams(new RelativeLayout.LayoutParams(50, 50));
        // b.layout(100, 50, 100, 50);
        // RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(null);
@@ -32,4 +54,19 @@ public class SampleMethodActivity extends Activity {
         //rl.addView(b);
     }
 
+	@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+      
+        
+        // Call here getWidth() and getHeight()
+        width = b.getWidth();
+        height = b.getHeight();
+        bottom = b.getBottom();
+        
+        DrawView dv = new DrawView(this,width/2,bottom);
+        ll.addView(dv);
+        System.out.println("Width: "+width+" height: "+height);
+        
+     }
 }

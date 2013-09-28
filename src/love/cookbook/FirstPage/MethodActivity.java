@@ -92,16 +92,16 @@ public class MethodActivity extends SherlockActivity {
 	        
 	        list.setOnItemClickListener(new OnItemClickListener() {
 
+	        	boolean flag = false;
 	        	
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, final int position,
 	    				long id) {
 					// TODO Auto-generated method stub
 				     RelativeLayout ll = (RelativeLayout) view;
-					  ImageView image1 = (ImageView)ll.findViewById(R.id.imageView2);
-					  final TextView textView2 = (TextView)ll.findViewById(R.id.textView2);
 					 					  
 					  final int count = position+1;
+					  
 					  
 					  boolean stat = checked.get(position, false);
 		                checked.put(position, !stat);
@@ -117,10 +117,10 @@ public class MethodActivity extends SherlockActivity {
 	                	t[position].setGravity(Gravity.BOTTOM, 0, 0);
 	                	t[position].setView(layout);
 		                
-		                if(!ARRAY.timeToPrepare[position].equals("NA")  && checked.get(position,false)){
+		                if(!ARRAY.timeToPrepare[position].equals("NA")  && checked.get(position,false) && !flag){
 			            	//playAudio(); 
 		                	
-		                	list.setEnabled(false);
+		                	//list.setEnabled(false);
 		                		                		                	
 		                	textView.setText("Step "+count+":Timer Started");
             				t[position].show();
@@ -129,11 +129,12 @@ public class MethodActivity extends SherlockActivity {
 			            		
 			   	            
 			            	     public void onTick(long leftTimeInMilliseconds) {
-			            	    	 
+			            	    	 flag = true;
 			            	    	 long seconds = leftTimeInMilliseconds / 1000;
 			            	    	// System.out.println("tick of position: "+position);
 		            					textView.setText("Step "+count+":"+seconds / 60 + " mins and " + seconds % 60+" seconds remaining");
-			            	    		t[position].show();
+		            					if(seconds % 60 == 60||seconds % 60 == 50||seconds % 60 == 40||seconds % 60 == 30||seconds % 60 == 20||seconds % 60 == 10|seconds % 60 == 00)
+		            						t[position].show();
 		            					
 			            	    	// textView2.setText(seconds/60+":"+seconds%60);
 			            	    	 //alert.setMessage(seconds / 60 + "mins and " + seconds % 60+" seconds remaining");
@@ -143,7 +144,8 @@ public class MethodActivity extends SherlockActivity {
 
 			            	     public void onFinish() {
 			            	    	// progressDialog.dismiss();
-			            	    	 list.setEnabled(true);
+			            	    	 flag = false;
+			            	    	 //list.setEnabled(true);
 			            	    	 t[position].cancel();
 			            	    	 alert.setTitle("Done!!");
 			            	    	 alert.setMessage(ARRAY.arrowValue[position]);
@@ -164,10 +166,13 @@ public class MethodActivity extends SherlockActivity {
 			            	  }.start();
 			            	  
 			            }
-		                else if(!ARRAY.timeToPrepare[position].equals("NA") && !checked.get(position,false)){
-		                	myTimer[position].cancel();
-		                	textView.setText("Step "+count+": Timer Stopped!!");
-		                	t[position].show();
+		                else if(!ARRAY.timeToPrepare[position].equals("NA") && !checked.get(position,false) && flag){
+		                	flag = false;
+		                	if(myTimer[position]!= null){
+		                		myTimer[position].cancel();
+		                		textView.setText("Step "+count+": Timer Stopped!!");
+		                		t[position].show();
+		                	}
             			}
 		                	
 				}

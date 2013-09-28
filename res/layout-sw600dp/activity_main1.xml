@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+     android:id="@+id/RootView" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wooden_background" >
+
+        <Button
+            android:id="@+id/mainCourseButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="63dp"
+            android:background="@drawable/meal" />
+
+        <Button
+            android:id="@+id/sweetToothButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/sweet_tooth" />
+
+        <Button
+            android:id="@+id/breakfastButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignBaseline="@+id/galleryButton"
+            android:layout_alignBottom="@+id/galleryButton"
+            android:layout_toRightOf="@+id/searchEditText1"
+            android:background="@drawable/breakfast" />
+
+        <Button
+            android:id="@+id/galleryButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_above="@+id/mainCourseButton"
+            android:layout_marginBottom="29dp"
+            android:layout_toLeftOf="@+id/searchEditText1"
+            android:background="@drawable/gallery" />
+
+        <Button
+            android:id="@+id/bakersDelightButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignBaseline="@+id/favouriteButton"
+            android:layout_alignBottom="@+id/favouriteButton"
+            android:layout_alignLeft="@+id/galleryButton"
+            android:background="@drawable/bakers_delight" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sweetToothButton"
+            android:layout_centerHorizontal="true"
+            android:text="Sweet Tooth!"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="21sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/bakersDelightButton"
+            android:layout_below="@+id/bakersDelightButton"
+            android:text="Baker&apos;s Delight"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="21sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/mainCourseButton"
+            android:layout_alignLeft="@+id/galleryButton"
+            android:layout_marginLeft="31dp"
+            android:text="Gallery"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="21sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignLeft="@+id/textView3"
+            android:text="Breakfast"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="21sp" />
+
+        <Button
+            android:id="@+id/favouriteButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignLeft="@+id/breakfastButton"
+            android:layout_alignTop="@+id/textView1"
+            android:background="@drawable/favourites" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="39dp"
+            android:text="Meal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="21sp" />
+
+        <Button
+            android:id="@+id/settingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/mainCourseButton"
+            android:layout_alignRight="@+id/breakfastButton"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/settings_button" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Favourites"
+            android:layout_marginLeft="450dp"
+            android:layout_marginTop="340dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="21sp" />
+
+        <Button
+            android:id="@+id/searchbutton1"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="469dp"
+            android:background="@drawable/search_image" />
+
+        <EditText
+            android:id="@+id/searchEditText1"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="37dp"
+            android:autoText="true"
+            android:background="@drawable/text_box_image"
+            android:ems="10"
+            android:hint="Search Recipe.."
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
+
+    </RelativeLayout>
+
+</LinearLayout>

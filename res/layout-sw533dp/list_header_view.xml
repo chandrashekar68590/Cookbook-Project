@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="fill_parent"
-        android:layout_height="335dp"
+        android:layout_height="345dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -30,12 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/recipeTextView"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginLeft="49dp"
+        android:layout_marginTop="13dp"
         android:text="Ingredients"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/black"
-        android:textSize="21sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/recipeTextView"
@@ -44,7 +44,7 @@
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignTop="@+id/imageView2"
         android:layout_marginTop="05dp"
-        android:text="Sample text view to check width"
+        android:text="Sample text to check the width"
         android:textColor="@android:color/black"
         android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView2"
-        android:layout_marginRight="95dp"
+        android:layout_marginRight="107dp"
         android:text="Serving for 3"
         android:textColor="@android:color/black" />
 

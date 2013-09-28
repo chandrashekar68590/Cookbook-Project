@@ -13,7 +13,7 @@
     android:anyDensity="true" />
 
     <application
-        android:icon="@drawable/cookbook_logo"
+        android:icon="@drawable/cookbook_icon1"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock">
         <activity
@@ -69,7 +69,7 @@
     <!-- Permission set to Receive SMS from other phone -->
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     
-    <!-- Permission to communicate request and response messsages to google play's billing service -->
+    <!-- Permission to communicate request and response messages to google play's billing service -->
     <uses-permission android:name="com.android.vending.BILLING" />
     
 </manifest>

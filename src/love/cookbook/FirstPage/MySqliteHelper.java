@@ -180,9 +180,9 @@ public class MySqliteHelper extends SQLiteOpenHelper{
 			cur = myDataBase.rawQuery("SELECT * FROM ZINGREDIENTS where ZRECIPE=? ORDER BY ZISKEY DESC"
 				, new String []{id});
 		else if(isNonVeg !=null)
-			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES WHERE ZISLOCKED=0 AND ZISNONVEG = ?",new String [] {isNonVeg});
+			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES WHERE ZISNONVEG = ?",new String [] {isNonVeg});
 		else
-			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES WHERE ZISLOCKED=0",null);
+			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES",null);
 		
 		return cur;
 	}

@@ -42,8 +42,10 @@ import android.widget.TextView;
 	        	convertView = inflater.inflate(R.layout.item,parent, false);
 	        	//image = (ImageView)vi.findViewById(R.id.imageView);
 	        	holder = new ViewHolder();
+	        	
 	        	holder.image = (ImageView) convertView.findViewById(R.id.imageView2);
 	        	holder.vegNonveggImageView = (ImageView) convertView.findViewById(R.id.imageView3);
+	        	holder.lockImageView = (ImageView)convertView.findViewById(R.id.lockImageView);
 	        	
 	        	holder.textView1 = (TextView)convertView.findViewById(R.id.textView1);
 	        	holder.textView2 = (TextView)convertView.findViewById(R.id.textView2);
@@ -59,23 +61,19 @@ import android.widget.TextView;
 	        holder.image.setImageBitmap(bitmapImages[position]);
 	        holder.textView2.setText(recipeDescripion[position]);
 	        holder.textView3.setText(timeToPrepare[position]); 
-	        /*
-	        ImageView lockImageView = (ImageView)vi.findViewById(R.id.lockImageView);
+	        
 	        if(lock[position].equals("1"))
-	        	lockImageView.setImageResource(R.drawable.lock);
+	        	holder.lockImageView.setImageResource(R.drawable.lock);
 	        else 
-	        	lockImageView.setImageResource(R.drawable.ic_action_search);
-	        */
+	        	holder.lockImageView.setImageResource(0);
 	        
-	        if(nonVeg[position].equals("1")){
-	        	//System.out.println("Inside non veg");
+	        
+	        if(nonVeg[position].equals("1"))
 	        	holder.vegNonveggImageView.setImageResource(R.drawable.non_veg_symbol);
-	        }
-	        else{
-	        	//System.out.println("Inside veg");
-	        	holder.vegNonveggImageView.setImageResource(R.drawable.veg_symbol);
-	        }
 	        
+	        else
+	        	holder.vegNonveggImageView.setImageResource(R.drawable.veg_symbol);
+	        	        
 	        
 	        return convertView;
 	    }
@@ -98,7 +96,7 @@ import android.widget.TextView;
 			TextView textView1;
 			TextView textView2;
 			TextView textView3;
-			ImageView vegNonveggImageView;
+			ImageView vegNonveggImageView,lockImageView;
 		}
 
 

@@ -1,18 +1,45 @@
 package love.cookbook.FirstPage;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-import android.app.*;
-import android.content.*;
-import android.database.*;
-import android.os.*;
-import android.view.*;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Messenger;
+import android.util.Base64;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 public class FirstPageActivity extends Activity {
 	
-	Button searchButton,mainCourseButton,breakfastButton,bakersDelightButton,sweetToothButton,favouriteButton,galleryButton,settingButton,notificationButton,SMSButton;
+	public Button searchButton,mainCourseButton,breakfastButton,bakersDelightButton,sweetToothButton,favouriteButton,galleryButton,settingButton,notificationButton,SMSButton;
 	public EditText searchEditText;
 	CheckBox nonVegCheckBox;
 	Spinner sortSpinner;
@@ -106,13 +133,32 @@ public class FirstPageActivity extends Activity {
                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
          */
         
-        setContentView(R.layout.main1);
+        setContentView(R.layout.activity_main1);
 
         /*Creating a database connection.
          * The below lines of codes call the SQLiteHelper class with opens the database and 
          * copies the local database created by us to the created database.         
          */
 
+        /*
+         * This code snippet is to generate a correct key hash to be used in to connect to facebook. Unhash this if you are working in different PC and configure this new key
+         * in facebook developer
+        try{ 
+        	System.out.println("Checking signs");
+        	PackageInfo info = getPackageManager().getPackageInfo(this.getPackageName(), PackageManager.GET_SIGNATURES);
+        	for (Signature signature : info.signatures) {
+        		MessageDigest md = MessageDigest.getInstance("SHA");
+        		md.update(signature.toByteArray());
+        		System.out.println(Base64.encodeToString(md.digest(), Base64.DEFAULT));
+        	}
+        } catch (NameNotFoundException e) {
+        	e.printStackTrace();
+        	System.out.println(e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+        	e.printStackTrace();
+        	System.out.println(e.getMessage());
+        }
+        */
         
         dbHelper = new MySqliteHelper(this);
 		 try {
@@ -140,25 +186,25 @@ public class FirstPageActivity extends Activity {
          */
 
         searchButton = (Button)findViewById(R.id.searchbutton1);
-        searchButton.setOnClickListener(new SearchButtonListener());
-        
+        searchButton.setOnClickListener(new SearchButtonListener());        
 
-        mainCourseButton = (Button)findViewById(R.id.button1);
+        mainCourseButton = (Button)findViewById(R.id.mainCourseButton);
         mainCourseButton.setOnClickListener(new MainCourseButtonListener());
         
-        breakfastButton = (Button)findViewById(R.id.button2);
+        
+        breakfastButton = (Button)findViewById(R.id.breakfastButton);
         breakfastButton.setOnClickListener(new BreakfastButtonListener());
         
-        sweetToothButton = (Button)findViewById(R.id.button3);
+        sweetToothButton = (Button)findViewById(R.id.sweetToothButton);
         sweetToothButton.setOnClickListener(new SweetToothButtonListener());
         
-        bakersDelightButton = (Button)findViewById(R.id.button4);
+        bakersDelightButton = (Button)findViewById(R.id.bakersDelightButton);
         bakersDelightButton.setOnClickListener(new BakersDelightButtonListener());
         
-        favouriteButton = (Button)findViewById(R.id.button5);
+        favouriteButton = (Button)findViewById(R.id.favouriteButton);
         favouriteButton.setOnClickListener(new FavouriteButtonListener());
         
-        galleryButton = (Button)findViewById(R.id.button6);
+        galleryButton = (Button)findViewById(R.id.galleryButton);
         galleryButton.setOnClickListener(new GalleryButtonListener());
         
         settingButton = (Button)findViewById(R.id.settingButton);
@@ -182,14 +228,6 @@ public class FirstPageActivity extends Activity {
     
     protected void onDestroy(){
     	super.onDestroy();
-    	
-    	System.out.println("First Page: On destroy called");
-        //unregisterReceiver(receiver);
-    	for(int i=0;i<methodActivity.myTimer.length;i++)
-			 if(methodActivity.myTimer[i]!=null){
-				   methodActivity.myTimer[i].cancel();
-				   methodActivity.t[i].cancel();
-			 }
     	unbindDrawables(findViewById(R.id.RootView));
         System.gc();
     }

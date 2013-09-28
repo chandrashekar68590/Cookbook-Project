@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wooden_background" 
+     android:id="@+id/RootView">
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="320dp"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/toggle_bg"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:cacheColorHint="#00000000" 
+        android:dividerHeight="8dp"
+        android:divider="@drawable/toggle_bg">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/ingredientsButton"
+        android:layout_width="80dp"
+        android:layout_height="42dp"
+        android:layout_above="@+id/listView1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="100dp"
+        android:background="@drawable/ingredient_button_release" />
+
+    <Button
+        android:id="@+id/methodButton"
+        android:layout_width="80dp"
+        android:layout_height="42dp"
+        android:layout_alignBaseline="@+id/ingredientsButton"
+        android:layout_alignBottom="@+id/ingredientsButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/method_button_pressed" />
+
+</RelativeLayout>

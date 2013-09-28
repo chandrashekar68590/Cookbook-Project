@@ -35,6 +35,7 @@ public class IngredientActivity extends SherlockActivity {
         	Toast.makeText(getBaseContext(),  "Posted on Facebook wall!", Toast.LENGTH_LONG).show();
         	
         	
+        	
         }
     };
     
@@ -58,21 +59,21 @@ public class IngredientActivity extends SherlockActivity {
 	   	SubMenu subMenu = menu.addSubMenu("Add");
 	
 	   	subMenu.add(0, VARIABLES.FACEBOOK, 0,"Share on FB")
-	   	.setIcon(R.drawable.fb);
+	   	.setIcon(R.drawable.fb_logo);
 	   	
 	   	subMenu.add(0, VARIABLES.SHARE,0,"Share Via Message")
-	   	.setIcon(R.drawable.message_icon);
+	   	.setIcon(R.drawable.mail);
 	   	
 	   	subMenu.add(0,VARIABLES.MAIL,0,"Share Via Mail")
-	   	.setIcon(R.drawable.message_icon);
+	   	.setIcon(R.drawable.mail);
 	   	
-	   	if(isFavouriteValue == 0)
+	   	if(isFavouriteValue == 0) 
 	   		subMenu.add(0, VARIABLES.FAVOURITE,0,"Mark as Favourite")
-	   		.setIcon(R.drawable.message_icon);
+	   		.setIcon(R.drawable.mark_favourite);
 	   	
 	   	else
 	   		subMenu.add(0, VARIABLES.FAVOURITE,0,"My Favourite")
-	   		.setIcon(R.drawable.message_icon);
+	   		.setIcon(R.drawable.my_favourite);
 	   		
 	   	MenuItem subMenu1Item = subMenu.getItem();
 	   	subMenu1Item.setIcon(R.drawable.abs__ic_menu_share_holo_dark);
@@ -238,6 +239,7 @@ public class IngredientActivity extends SherlockActivity {
 					
 			cur.close();
 			dbHelper.close();
+			
 			
 			Intent intent = new Intent(IngredientActivity.this,MethodActivity.class);
 			intent.putExtra("STEPS", ARRAY.preparationSteps);

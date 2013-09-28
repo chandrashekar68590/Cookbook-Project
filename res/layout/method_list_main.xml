@@ -30,21 +30,22 @@
     </ListView>
 
     <Button
-        android:id="@+id/methodButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ingredientsButton"
+        android:layout_width="80dp"
+        android:layout_height="42dp"
         android:layout_above="@+id/listView1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="94dp"
-        android:background="@drawable/toggle_method" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="160dp"
+        android:background="@drawable/ingredient_button_release" />
 
     <Button
-        android:id="@+id/ingredientsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/methodButton"
-        android:background="@drawable/toggle_ingredients"/>
+        android:id="@+id/methodButton"
+        android:layout_width="80dp"
+        android:layout_height="42dp"
+        android:layout_alignBaseline="@+id/ingredientsButton"
+        android:layout_alignBottom="@+id/ingredientsButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="160dp"
+        android:background="@drawable/method_button_pressed" />
 
 </RelativeLayout>

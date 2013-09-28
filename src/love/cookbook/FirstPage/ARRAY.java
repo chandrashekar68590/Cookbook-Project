@@ -27,7 +27,6 @@ public class ARRAY {
 	public static String [] preparationSteps;
 	public static String [] arrowValue;
 
-	public static int image [];
 	public static int imageIngredientsID [];
 		
 

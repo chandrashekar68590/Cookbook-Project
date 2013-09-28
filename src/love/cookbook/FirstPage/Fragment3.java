@@ -1,5 +1,6 @@
 package love.cookbook.FirstPage;
 
+import android.app.AlertDialog;
 import android.content.*;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -27,6 +28,8 @@ public class Fragment3 extends SherlockFragment {
 	public String packageName;
 	
 	String eachIngredientsImageName [];
+	
+	public AlertDialog.Builder alert;
 
 	
 	public int imageID;
@@ -42,6 +45,8 @@ public class Fragment3 extends SherlockFragment {
         firstPage = new FirstPageActivity();
         mainCourseTab = new MainCourseTab();
         bitmapDecoder = new BitmapDecoder();
+        
+        alert = new AlertDialog.Builder(getActivity());
         
 		SharedPreferences settings = getActivity().getSharedPreferences(VARIABLES.PREFS_NAME, 0);
 		if(settings.getString("SpinnerChoice", "Sort By Default").equals("Sort By Default")){
@@ -62,7 +67,7 @@ public class Fragment3 extends SherlockFragment {
 		dbHelper = new MySqliteHelper(getActivity());
 		firstPage = new FirstPageActivity();
 		
-		ARRAY.image = new int[ARRAY.gridImageName.length];
+
 		ARRAY.bitmapImages = new Bitmap[ARRAY.gridImageName.length];
 
         packageName=this.getActivity().getPackageName();
@@ -138,7 +143,7 @@ public class Fragment3 extends SherlockFragment {
    	   		    
    	   		    //System.out.println("The Recipe ID is: "+recipeID);
    	   		    
-   	   		    //if(lock.equals("0")){		//Commented for next release
+   	   		    if(lock.equals("0")){		//Commented for next release
 	   	   		    cur = dbHelper.getIngredients(recipeID,null);
 	      	  		cursorEnd = cur.getCount();
 	      	  		
@@ -174,11 +179,26 @@ public class Fragment3 extends SherlockFragment {
 
 	    			
 	    			startActivity(intent);
-   	   		   /* }
+   	   		    }
    	   		    else{
-   	   		    	Toast t = Toast.makeText(getActivity().getApplicationContext(), "This item is locked", Toast.LENGTH_SHORT);
-   	   		    	t.show();
-   	   		    }*/
+   	   		    	alert.setTitle("Buy Dish");
+		 	    	alert.setMessage("Do you want to purchase this?");
+		 	    	
+		 	    	 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		 	    		 public void onClick(DialogInterface dialog, int which) {
+	                    // Some code
+		 	    		 }
+	
+		 	    	 });
+		 	    	 alert.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
+		 	    		 public void onClick(DialogInterface dialog, int which) {
+	                     // Some code
+		 	    		 }
+	
+	               });
+		 	    	 
+		 	    	 alert.show();
+   	   		    }
     		}
  		
     	});

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RootView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wooden_background" >
+
+        <Button
+            android:id="@+id/sweetToothButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/sweet_tooth" />
+
+        <Button
+            android:id="@+id/bakersDelightButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignBaseline="@+id/favouriteButton"
+            android:layout_alignBottom="@+id/favouriteButton"
+            android:layout_alignLeft="@+id/galleryButton"
+            android:background="@drawable/bakers_delight" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sweetToothButton"
+            android:layout_centerHorizontal="true"
+            android:text="Sweet Tooth!"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/searchEditText1"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bakersDelightButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
+            android:autoText="true"
+            android:background="@drawable/text_box_image"
+            android:ems="10"
+            android:hint="Search Recipe.."
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bakersDelightButton"
+            android:layout_toLeftOf="@+id/searchbutton1"
+            android:text="Baker&apos;s Delight"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/favouriteButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/textView1"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/textView1"
+            android:background="@drawable/favourites" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/favouriteButton"
+            android:layout_below="@+id/favouriteButton"
+            android:text="Favourites"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/galleryButton"
+            android:layout_toLeftOf="@+id/searchEditText1"
+            android:text="Gallery"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView4"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignLeft="@+id/textView3"
+            android:text="Breakfast"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="14dp"
+            android:text="Meal"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/settingButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/mainCourseButton"
+            android:layout_alignRight="@+id/breakfastButton"
+            android:background="@drawable/settings_button" />
+
+        <Button
+            android:id="@+id/searchbutton1"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/searchEditText1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/search_image" />
+
+        <Button
+            android:id="@+id/galleryButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignTop="@+id/searchbutton1"
+            android:background="@drawable/gallery" />
+
+        <Button
+            android:id="@+id/breakfastButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_above="@+id/textView5"
+            android:layout_alignRight="@+id/textView3"
+            android:background="@drawable/breakfast" />
+
+        <Button
+            android:id="@+id/mainCourseButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_above="@+id/textView6"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/meal" />
+
+    </RelativeLayout>
+
+</LinearLayout>

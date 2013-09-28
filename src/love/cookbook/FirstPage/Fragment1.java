@@ -1,13 +1,22 @@
 package love.cookbook.FirstPage;
 
-import android.content.*;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -23,6 +32,7 @@ public class Fragment1 extends SherlockFragment {
 	
 	public String catagory;
 	public String subCatagory1;
+	public AlertDialog.Builder alert;
 	
 	public String packageName;
 	
@@ -58,6 +68,8 @@ public class Fragment1 extends SherlockFragment {
         mainCourseTab = new MainCourseTab();
         
         bitmapDecoder = new BitmapDecoder();
+        
+        alert = new AlertDialog.Builder(getActivity());
 
 		SharedPreferences settings = getActivity().getSharedPreferences(VARIABLES.PREFS_NAME, 0);
 		if(settings.getString("SpinnerChoice", "Sort By Default").equals("Sort By Default")){
@@ -79,14 +91,12 @@ public class Fragment1 extends SherlockFragment {
 		dbHelper = new MySqliteHelper(getActivity());
 		final FirstPageActivity firstPage = new FirstPageActivity();
 		
-		ARRAY.image = new int[ARRAY.gridImageName.length];
 		ARRAY.bitmapImages = new Bitmap[ARRAY.gridImageName.length];
 	        
 	        packageName=this.getActivity().getPackageName();
 	        for(int i=0;i<ARRAY.gridImageName.length;i++)
 	        	ARRAY.bitmapImages[i] = BitmapDecoder.decodeSampledBitmapFromResource(getResources(), getResources().getIdentifier(ARRAY.gridImageName[i].toLowerCase(), "drawable", packageName), 100, 91);
 	           
-		
 		View v1 = inf.inflate(R.layout.list_main, grp, false);
 		list = (ListView)v1.findViewById(android.R.id.list);
         
@@ -113,6 +123,7 @@ public class Fragment1 extends SherlockFragment {
     		String quantity [];
     		String lock;
     		int cursorEnd,cursorCount;
+    		
 
     		public void onItemClick(AdapterView<?> parent, View view, int position,
     				long id) {
@@ -156,7 +167,7 @@ public class Fragment1 extends SherlockFragment {
    	   		    
    	   		    //System.out.println("The Recipe ID is: "+recipeID);
    	   		    
-   	   		   // if(lock.equals("0")){		//Commented for next release
+   	   		    if(lock.equals("0")){		//Commented for next release
 	   	   		    cur = dbHelper.getIngredients(recipeID,null);
 	      	  		cursorEnd = cur.getCount();
 	      	  		
@@ -191,11 +202,28 @@ public class Fragment1 extends SherlockFragment {
 	    			intent.putExtra("EACHINGREDIENTSIMAGENAME", eachIngredientsImageName);
 	    			
 	    			startActivity(intent);
-   	   		    /*}
+	    			
+   	   		    }
    	   		    else{
-   	   		    	Toast t = Toast.makeText(getActivity().getApplicationContext(), "This item is locked", Toast.LENGTH_SHORT);
-   	   		    	t.show();
-   	   		    }*/
+   	   		   		alert.setTitle("Buy Dish");
+		 	    	alert.setMessage("Do you want to purchase this?");
+		 	    	
+		 	    	 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                            // Some code
+                         }
+
+                      });
+		 	    	 alert.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                             // Some code
+                          }
+
+                       });
+		 	    	 
+        	    	 alert.show();
+   	   		    	
+   	   		    }
     		}
  		
     	});

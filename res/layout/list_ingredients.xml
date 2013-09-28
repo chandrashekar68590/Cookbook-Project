@@ -26,20 +26,20 @@
 
      <Button
          android:id="@+id/methodButton"
-         android:layout_width="79dp"
-         android:layout_height="30dp"
-         android:layout_above="@+id/listView1"
-         android:layout_alignParentRight="true"
+         android:layout_width="80dp"
+         android:layout_height="42dp"
          android:layout_alignParentTop="true"
-         android:layout_marginRight="90dp"
-         android:background="@drawable/toggle_method" />
+         android:layout_alignParentRight="true"
+         android:layout_marginRight="81dp"
+         android:background="@drawable/method_button_release" />
 
      <Button
          android:id="@+id/button1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/listView1"
-         android:layout_toLeftOf="@+id/methodButton"
-         android:background="@drawable/toggle_ingredients" />
+         android:layout_width="80dp"
+         android:layout_height="42dp"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentTop="true"
+         android:layout_marginLeft="81dp"
+         android:background="@drawable/ingredient_button_pressed" />
 
 </RelativeLayout>

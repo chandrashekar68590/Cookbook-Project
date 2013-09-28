@@ -81,15 +81,16 @@ public class MethodLazyAdapter extends BaseAdapter {
         holder.textView.setText(preparationSteps[position]);
         
         if(!timeToPrepare[position].equals("NA"))
-        	holder.image1.setImageResource(R.drawable.lock);
+        	holder.image1.setImageResource(R.drawable.timer);
         else{
         	holder.image1.setImageResource(0);
         }
 
         if(checked.get(position, false)){
         	holder.image2.setImageResource(R.drawable.select_right);
-            if(!timeToPrepare[position].equals("NA"))
-            	holder.image1.setImageResource(R.drawable.select_right);
+        	
+            //if(!timeToPrepare[position].equals("NA"))
+            //	holder.image1.setImageResource(R.drawable.timer);
 	      }
 	      else{
 	    	  holder.image2.setImageResource(0);  
