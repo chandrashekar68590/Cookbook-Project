@@ -4,14 +4,22 @@ package love.cookbook.FirstPage;
 import java.util.ArrayList;
 import java.util.List;
 
+import love.cookbook.FirstPage.util.IabHelper;
+import love.cookbook.FirstPage.util.IabResult;
+import love.cookbook.FirstPage.util.Inventory;
+import love.cookbook.FirstPage.util.Purchase;
 import android.annotation.SuppressLint;
-import android.content.*;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
-import android.widget.*;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -42,6 +50,7 @@ public class MainCourseTab extends SherlockFragmentActivity{
 	
 	Intent intent;
 	SharedPreferences settings;
+	private SparseBooleanArray unlocked = new SparseBooleanArray();
 	
 	
 	//Variables used for scroll tabs
@@ -56,14 +65,22 @@ public class MainCourseTab extends SherlockFragmentActivity{
 	private static final String FRAGMENT2 = Fragment2.class.getName();
 	private static final String FRAGMENT3 = Fragment3.class.getName();
 	
+	Fragment1 fragment1;
+	LazyAdapter adapter;
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        
+        System.out.println("Inside Main course OnCreate");
 
         dbHelper = new MySqliteHelper(this);
         firstPage = new FirstPageActivity();
+        fragment1 = new Fragment1();
+        adapter = new LazyAdapter();
                 
+        
         Intent intent = getIntent();  // Reusable Intent for each tab
         
         //This will set the back arrow key with the home icon in action bar Sherlock
@@ -134,6 +151,37 @@ public class MainCourseTab extends SherlockFragmentActivity{
      		mIndicator.setViewPager(mPager);
         
     }
+	
+	/*
+	public void setUpBillingConnection(){
+    	mHelper = new IabHelper(this, VARIABLES.base64EncodedPublicKey);
+        
+    	mHelper.startSetup(new 
+		IabHelper.OnIabSetupFinishedListener() {
+			@Override
+			public void onIabSetupFinished(IabResult result) {
+				// TODO Auto-generated method stub
+				System.out.println("Inside Onsetup finished");
+				 if (!result.isSuccess()) 
+					 System.out.println("In-app Billing setup failed: " + result);
+	    	     else             
+	    	    	 System.out.println("In-app Billing is set up OK"+result);
+			}
+    	});
+	}
+	*/
+	
+	 @Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) 
+	    {
+		 System.out.println("Inside main course activity result: "+VARIABLES.mHelper);
+			 System.out.println("Result: "+resultCode+" Request: "+requestCode);
+	         if (VARIABLES.mHelper.handleActivityResult(requestCode, 
+	                 resultCode, data)) {     
+	       	super.onActivityResult(requestCode, resultCode, data);
+         }	          
+	    }
+	 
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -280,6 +328,17 @@ public class MainCourseTab extends SherlockFragmentActivity{
 		 super.onBackPressed();
 		
 	 }
+	 
+	    protected void onDestroy(){
+	    	super.onDestroy();
+	        
+	    	/*
+	        if (VARIABLES.mHelper != null) 
+	        	VARIABLES.mHelper.dispose();
+	        VARIABLES.mHelper = null; 
+	        
+	        */
+	    }
 
 
 	   @Override

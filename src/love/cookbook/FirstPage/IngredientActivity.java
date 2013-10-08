@@ -241,6 +241,7 @@ public class IngredientActivity extends SherlockActivity {
 			dbHelper.close();
 			
 			
+			/*
 			Intent intent = new Intent(IngredientActivity.this,MethodActivity.class);
 			intent.putExtra("STEPS", ARRAY.preparationSteps);
 			intent.putExtra("TIMETOPREPARE", ARRAY.timeToPrepare);
@@ -248,10 +249,15 @@ public class IngredientActivity extends SherlockActivity {
 			intent.putExtra("NUMBEROFSTEPS", noOfSteps);
 			startActivity(intent);
 			
-			/*
-			Intent intent = new Intent(IngredientActivity.this,SampleMethodActivity.class);
-			startActivity(intent);
 			*/
+			
+			Intent intent = new Intent(IngredientActivity.this,SampleMethodActivity.class);
+			intent.putExtra("STEPS", ARRAY.preparationSteps);
+			intent.putExtra("TIMETOPREPARE", ARRAY.timeToPrepare);
+			intent.putExtra("ARROW", ARRAY.arrowValue);
+			intent.putExtra("NUMBEROFSTEPS", noOfSteps);
+			startActivity(intent);
+			
 			
 		}
     	
@@ -260,6 +266,7 @@ public class IngredientActivity extends SherlockActivity {
     
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		System.out.println("Inside OnActivityResult");
 		this.facebookConnector.getFacebook().authorizeCallback(requestCode, resultCode, data);
 	}
 	
@@ -268,6 +275,7 @@ public class IngredientActivity extends SherlockActivity {
 	protected void onResume() {
 		super.onResume();
 		updateLoginStatus();
+		
 	}
 	
 	public void updateLoginStatus() {
@@ -280,7 +288,6 @@ public class IngredientActivity extends SherlockActivity {
 	}	
 	
 	public void postMessage() {
-		System.out.println("Inside post message");
 		
 		if (facebookConnector.getFacebook().isSessionValid()) {
 			postMessageInThread();

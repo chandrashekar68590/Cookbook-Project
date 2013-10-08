@@ -63,6 +63,7 @@ public class MethodLazyAdapter extends BaseAdapter {
     
     public View getView(final int position, View convertView, ViewGroup parent) {
     	//View vi=convertView;
+    		
         if(convertView==null){
         	//vi = inflater.inflate(R.layout.method_item, null);
         	convertView = inflater.inflate(R.layout.method_item, null);

@@ -127,6 +127,13 @@ public class FirstPageActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         methodActivity = new MethodActivity();
+        /*
+        long heapsize = Runtime.getRuntime().totalMemory();
+        long heapMaxSize = Runtime.getRuntime().maxMemory();
+        long heapFreeSize = Runtime.getRuntime().freeMemory(); 
+        
+        System.out.println("Total Size: "+heapsize/1024+" Max: "+heapMaxSize/1024+" Free: "+heapFreeSize/1024);
+         */
         
         /* For full screen app
          * getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
@@ -378,6 +385,7 @@ public class FirstPageActivity extends Activity {
             	      
             	      editor.putBoolean("NonVegCheckBoxResult", nonVegCheckBox.isChecked());
   					  editor.putString("SpinnerChoice", spinnerItemSeleted);
+  					 
 
             	      // Commit the edits!
             	      editor.commit();
@@ -616,7 +624,9 @@ public class FirstPageActivity extends Activity {
 
         public void onClick(View arg0) {
 			
+        	
 			int countOfCursor;
+			System.out.println("Search button clicked");
 			
 						
 	        searchEditText = (EditText)findViewById(R.id.searchEditText1);

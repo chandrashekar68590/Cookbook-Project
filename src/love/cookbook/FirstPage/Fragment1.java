@@ -1,5 +1,9 @@
 package love.cookbook.FirstPage;
 
+import love.cookbook.FirstPage.util.IabHelper;
+import love.cookbook.FirstPage.util.IabResult;
+import love.cookbook.FirstPage.util.Inventory;
+import love.cookbook.FirstPage.util.Purchase;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +21,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -29,6 +33,7 @@ public class Fragment1 extends SherlockFragment {
 	private MainPagerAdapter mainPageAdapter;
 	private Cursor cur;
 	private BitmapDecoder bitmapDecoder;
+	public ListViewSampleActivity listViewSampleActivity;
 	
 	public String catagory;
 	public String subCatagory1;
@@ -38,6 +43,8 @@ public class Fragment1 extends SherlockFragment {
 	
 	private ViewPager mPager;
 	private MainPagerAdapter mAdapter;
+	
+	Intent intent;
 	
 	public int imageID;
 	String ingredientsImageName;
@@ -68,6 +75,11 @@ public class Fragment1 extends SherlockFragment {
         mainCourseTab = new MainCourseTab();
         
         bitmapDecoder = new BitmapDecoder();
+        
+        listViewSampleActivity = new ListViewSampleActivity();
+        
+        
+        setUpBillingConnection();        
         
         alert = new AlertDialog.Builder(getActivity());
 
@@ -109,6 +121,7 @@ public class Fragment1 extends SherlockFragment {
         
 		adapter=new LazyAdapter	(getActivity(), ARRAY.dishes,ARRAY.description,ARRAY.timeToPrepareString,ARRAY.bitmapImages,ARRAY.lock,ARRAY.nonVeg);
         list.setAdapter(adapter);
+        adapter.setChecked(VARIABLES.unlocked);
         
        	list.setOnItemClickListener(new OnItemClickListener(){
     		String tableName;
@@ -127,7 +140,7 @@ public class Fragment1 extends SherlockFragment {
 
     		public void onItemClick(AdapterView<?> parent, View view, int position,
     				long id) {
-    			Intent intent;
+    			
     			String recipeID;
     			
     			columnName = "Z_PK";
@@ -205,23 +218,27 @@ public class Fragment1 extends SherlockFragment {
 	    			
    	   		    }
    	   		    else{
-   	   		   		alert.setTitle("Buy Dish");
-		 	    	alert.setMessage("Do you want to purchase this?");
+	   	   		  VARIABLES.unlocked.get(1,false);
+		   		    	
+	   	   		  alert.setTitle("Buy Dish");
+	   	   		  alert.setMessage("Do you want to unlock all locked recipes?");
 		 	    	
-		 	    	 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                         public void onClick(DialogInterface dialog, int which) {
-                            // Some code
-                         }
-
-                      });
-		 	    	 alert.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
-                         public void onClick(DialogInterface dialog, int which) {
-                             // Some code
-                          }
-
-                       });
+	   	   		  alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	              public void onClick(DialogInterface dialog, int which) {
+	                	 
+	                	 initiateBillingProcess();
+	              }
+	
+	              });
+		 	    
+	   	   		  alert.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
+	              public void onClick(DialogInterface dialog, int which) {
+	                     // Some code
+	               }
+	
+	               });
 		 	    	 
-        	    	 alert.show();
+	   	   		  alert.show();
    	   		    	
    	   		    }
     		}
@@ -229,6 +246,95 @@ public class Fragment1 extends SherlockFragment {
     	});
 
 	}
+	
+	public void setUpBillingConnection(){
+    	VARIABLES.mHelper = new IabHelper(getActivity(), VARIABLES.base64EncodedPublicKey);
+        
+    	VARIABLES.mHelper.startSetup(new 
+		IabHelper.OnIabSetupFinishedListener() {
+			@Override
+			public void onIabSetupFinished(IabResult result) {
+				// TODO Auto-generated method stub
+				System.out.println("Inside Onsetup finished");
+				 if (!result.isSuccess()) 
+					 System.out.println("In-app Billing setup failed: " + result);
+	    	     else             
+	    	    	 System.out.println("In-app Billing is set up OK"+result);
+			}
+    	});
+	}
+    	
+	
+	  public void initiateBillingProcess(){
+	    	
+	    	final IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
+	    			  new IabHelper.OnConsumeFinishedListener() {
+	    			   public void onConsumeFinished(Purchase purchase, 
+	    		             IabResult result) {
+
+	    			 if (result.isSuccess()) {		    	 
+	    				 	System.out.println("Item Consumed");
+	    				 	dbHelper.updateLockedValues();
+	    				 	VARIABLES.unlocked.put(1, true);
+	    				 	adapter.setChecked(VARIABLES.unlocked);
+	    				
+	    			 } else {
+	    			         // handle error
+	    			 }
+	    		  }
+	    		};
+
+	    	
+	    	final IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener 
+	    	   = new IabHelper.QueryInventoryFinishedListener() {
+	    		   public void onQueryInventoryFinished(IabResult result,
+	    		      Inventory inventory) {
+	    			   
+	    		      if (result.isFailure()) {
+	    			  // Handle failure
+	    		      } else {
+	    		    	  VARIABLES.mHelper.consumeAsync(inventory.getPurchase(VARIABLES.ITEM_SKU), 
+	    				mConsumeFinishedListener);
+	    		      }
+	    	    }
+	    	};
+
+	    	
+	    	IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener 
+	    	= new IabHelper.OnIabPurchaseFinishedListener() {
+			@Override
+				public void onIabPurchaseFinished(IabResult result,
+						Purchase purchase) {
+					// TODO Auto-generated method stub
+					 if (result.isFailure()) {
+			    	      // Handle error
+			    	      return;
+			    	 }      
+			    	 else if (purchase.getSku().equals(VARIABLES.ITEM_SKU)) {
+			    		 VARIABLES.mHelper.queryInventoryAsync(mReceivedInventoryListener);
+			    	   System.out.println("Item purchased");
+			    	}
+					
+				}
+	    	};
+	    	
+			System.out.println("Before Launch");
+			VARIABLES.mHelper.launchPurchaseFlow(getActivity(), VARIABLES.ITEM_SKU, 10001, mPurchaseFinishedListener,"");
+	    	//startActivityForResult(new Intent(), 10001);
+	    	
+		}
+	    
+	  /*
+	    @Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) 
+	    {
+	    	System.out.println("Result: "+resultCode+" Request: "+requestCode);
+	          if (!VARIABLES.mHelper.handleActivityResult(requestCode, 
+	                  resultCode, data)) {     
+	        	super.onActivityResult(requestCode, resultCode, data);
+	          }
+	    }
+	    */
 
 	public void fetchDishCatagory(String catagory,String subCatagory, String sortOption) {
 		

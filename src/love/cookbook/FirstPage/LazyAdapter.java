@@ -3,6 +3,7 @@ package love.cookbook.FirstPage;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,11 @@ import android.widget.TextView;
 	    private Bitmap [] bitmapImages;
 	    ViewHolder holder;
 	    private static LayoutInflater inflater=null; 
+	    private SparseBooleanArray unlocked = new SparseBooleanArray();
+	    
+	    public LazyAdapter(){
+	    	
+	    }
 	    
 	    public LazyAdapter(Activity a, String[] dishes, String[] recipeDescription,String[] timeToPrepare,Bitmap [] bitmapImages,String [] lock,String [] nonVeg) {
 	    	activity = a;
@@ -35,6 +41,11 @@ import android.widget.TextView;
 	        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    }
 
+	    public void setChecked(SparseBooleanArray ch){
+	    	unlocked = ch;
+	       notifyDataSetChanged();
+	    }
+	    
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        //View vi=convertView;
 	        if(convertView==null){
@@ -62,11 +73,17 @@ import android.widget.TextView;
 	        holder.textView2.setText(recipeDescripion[position]);
 	        holder.textView3.setText(timeToPrepare[position]); 
 	        
-	        if(lock[position].equals("1"))
-	        	holder.lockImageView.setImageResource(R.drawable.lock);
-	        else 
+	        if(unlocked.get(1,false))
 	        	holder.lockImageView.setImageResource(0);
 	        
+	        else{
+	        
+		        if(lock[position].equals("1"))
+		        	holder.lockImageView.setImageResource(R.drawable.lock);
+		        
+		        else 
+		        	holder.lockImageView.setImageResource(0);
+	        }
 	        
 	        if(nonVeg[position].equals("1"))
 	        	holder.vegNonveggImageView.setImageResource(R.drawable.non_veg_symbol);

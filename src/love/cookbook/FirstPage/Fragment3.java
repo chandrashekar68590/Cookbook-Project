@@ -1,5 +1,9 @@
 package love.cookbook.FirstPage;
 
+import love.cookbook.FirstPage.util.IabHelper;
+import love.cookbook.FirstPage.util.IabResult;
+import love.cookbook.FirstPage.util.Inventory;
+import love.cookbook.FirstPage.util.Purchase;
 import android.app.AlertDialog;
 import android.content.*;
 import android.database.Cursor;
@@ -88,6 +92,7 @@ public class Fragment3 extends SherlockFragment {
 		
 		adapter=new LazyAdapter	(getActivity(), ARRAY.dishes,ARRAY.description,ARRAY.timeToPrepareString,ARRAY.bitmapImages,ARRAY.lock,ARRAY.nonVeg);
         list.setAdapter(adapter);
+        adapter.setChecked(VARIABLES.unlocked);
         
         
        	list.setOnItemClickListener(new OnItemClickListener(){
@@ -182,11 +187,13 @@ public class Fragment3 extends SherlockFragment {
    	   		    }
    	   		    else{
    	   		    	alert.setTitle("Buy Dish");
-		 	    	alert.setMessage("Do you want to purchase this?");
+		 	    	alert.setMessage("Do you want to unlock all locked recipes?");
 		 	    	
 		 	    	 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 		 	    		 public void onClick(DialogInterface dialog, int which) {
 	                    // Some code
+		 	    			initiateBillingProcess();
+		 	    			
 		 	    		 }
 	
 		 	    	 });
@@ -203,6 +210,65 @@ public class Fragment3 extends SherlockFragment {
  		
     	});
 	}
+	
+	  public void initiateBillingProcess(){
+	    	
+	    	final IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
+	    			  new IabHelper.OnConsumeFinishedListener() {
+	    			   public void onConsumeFinished(Purchase purchase, 
+	    		             IabResult result) {
+
+	    			 if (result.isSuccess()) {		    	 
+	    				 	System.out.println("Item Consumed");
+	    				 	dbHelper.updateLockedValues();
+	    				 	VARIABLES.unlocked.put(1, true);
+	    				 	adapter.setChecked(VARIABLES.unlocked);
+	    				
+	    			 } else {
+	    			         // handle error
+	    			 }
+	    		  }
+	    		};
+
+	    	
+	    	final IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener 
+	    	   = new IabHelper.QueryInventoryFinishedListener() {
+	    		   public void onQueryInventoryFinished(IabResult result,
+	    		      Inventory inventory) {
+	    			   
+	    		      if (result.isFailure()) {
+	    			  // Handle failure
+	    		      } else {
+	    		    	  VARIABLES.mHelper.consumeAsync(inventory.getPurchase(VARIABLES.ITEM_SKU), 
+	    				mConsumeFinishedListener);
+	    		      }
+	    	    }
+	    	};
+
+	    	
+	    	IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener 
+	    	= new IabHelper.OnIabPurchaseFinishedListener() {
+			@Override
+				public void onIabPurchaseFinished(IabResult result,
+						Purchase purchase) {
+					// TODO Auto-generated method stub
+					 if (result.isFailure()) {
+			    	      // Handle error
+			    	      return;
+			    	 }      
+			    	 else if (purchase.getSku().equals(VARIABLES.ITEM_SKU)) {
+			    		 VARIABLES.mHelper.queryInventoryAsync(mReceivedInventoryListener);
+			    	   System.out.println("Item purchased");
+			    	}
+					
+				}
+	    	};
+	    	
+			System.out.println("Before Launch");
+			VARIABLES.mHelper.launchPurchaseFlow(getActivity(), VARIABLES.ITEM_SKU, 10001, mPurchaseFinishedListener,"");
+	    	//startActivityForResult(new Intent(), 10001);
+	    	
+		}
 	
 	public void fetchDishCatagory(String catagory,String subCatagory, String sortOption) {
 		

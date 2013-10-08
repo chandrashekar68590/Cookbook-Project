@@ -65,17 +65,9 @@
             android:layout_marginBottom="50dp"
             android:background="@drawable/gallery" />
 
-        <Button
-            android:id="@+id/searchbutton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/galleryButton"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/search_image" />
-
         <EditText
             android:id="@+id/searchEditText1"
-            android:layout_width="350dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/searchbutton1"
             android:layout_centerHorizontal="true"
@@ -100,36 +92,6 @@
             android:textSize="27sp" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bakersDelightButton"
-            android:layout_toLeftOf="@+id/searchEditText1"
-            android:text="Breakfast"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="27sp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView2"
-            android:layout_toRightOf="@+id/searchEditText1"
-            android:text="Favourites"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="27sp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/textView2"
-            android:layout_below="@+id/breakfastButton"
-            android:text="Gallery"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="27sp" />
-
-        <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,7 +107,7 @@
             android:layout_height="70dp"
             android:layout_alignBottom="@+id/mainCourseButton"
             android:layout_alignRight="@+id/breakfastButton"
-            android:background="@drawable/settings_button" />
+            android:background="@drawable/settings_icon" />
 
         <TextView
             android:id="@+id/textView6"
@@ -154,6 +116,47 @@
             android:layout_below="@+id/settingButton"
             android:layout_centerHorizontal="true"
             android:text="Meal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="27sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/bakersDelightButton"
+            android:layout_below="@+id/bakersDelightButton"
+            android:text="Baker&apos;s Delight"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="27sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/breakfastButton"
+            android:layout_marginRight="21dp"
+            android:layout_toLeftOf="@+id/searchEditText1"
+            android:text="Gallery"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="27sp" />
+
+        <Button
+            android:id="@+id/searchbutton1"
+            android:layout_width="95dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/galleryButton"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/search_image" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignLeft="@+id/favouriteButton"
+            android:layout_marginLeft="21dp"
+            android:text="Favourites"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="27sp" />
 

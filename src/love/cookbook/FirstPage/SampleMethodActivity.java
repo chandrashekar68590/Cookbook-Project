@@ -1,24 +1,52 @@
 package love.cookbook.FirstPage;
 
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 public class SampleMethodActivity extends Activity {
 	Button b,b1;
 	public int width,height,bottom;
 	 LinearLayout ll;
+	 MethodSampleAdapter adapter;
+	 Intent intent;
+	 public int noOfSteps;
 
     public void onCreate(Bundle savedInstanceState) {
 
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_method);
                 
+        final ListView list = (ListView)findViewById(R.id.listView1);
+        
+        final Intent intent = getIntent();
+        ARRAY.preparationSteps = intent.getStringArrayExtra("STEPS");
+        ARRAY.timeToPrepare = intent.getStringArrayExtra("TIMETOPREPARE"); 
+        ARRAY.arrowValue = intent.getStringArrayExtra("ARROW");
+        noOfSteps = intent.getIntExtra("NUMBEROFSTEPS", 0);
+        
+        
+        adapter=new MethodSampleAdapter(this,ARRAY.preparationSteps,ARRAY.timeToPrepare,ARRAY.arrowValue,noOfSteps);
+        list.setAdapter(adapter);
+        
+        list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				System.out.println("Item Clicked");
+				
+			}
+		});
+        
+        /*
         ll = (LinearLayout) findViewById(R.id.my_linear_layout);
         
        
@@ -52,8 +80,12 @@ public class SampleMethodActivity extends Activity {
         //params.leftMargin = 50;
         //params.topMargin = 60;
         //rl.addView(b);
+         * 
+         * 
+         */
     }
 
+    /*
 	@Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -69,4 +101,5 @@ public class SampleMethodActivity extends Activity {
         System.out.println("Width: "+width+" height: "+height);
         
      }
+     */
 }

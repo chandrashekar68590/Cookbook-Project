@@ -34,6 +34,7 @@ public class FacebookConnector {
 	
 	public void login() {
         if (!facebook.isSessionValid()) {
+        	System.out.println("Inside login");
             facebook.authorize(this.activity, this.permissions,new LoginDialogListener());
         }
     }

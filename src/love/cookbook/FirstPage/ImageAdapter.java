@@ -3,6 +3,7 @@ package love.cookbook.FirstPage;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ public class ImageAdapter extends BaseAdapter {
 	Bitmap bitmapImages[];
 	String timeToPrepareString [],nonVeg [],lock [];
 	ViewHolder holder;
+	private SparseBooleanArray unlocked = new SparseBooleanArray();
 
 	public ImageAdapter(Activity activity,Bitmap [] bitmapImages,String [] timeToPrepareString,String [] nonVeg,String [] lock) {
 		// TODO Auto-generated constructor stub
@@ -78,10 +80,16 @@ public class ImageAdapter extends BaseAdapter {
         holder.image1.setScaleType(ImageView.ScaleType.FIT_XY );
         holder.image1.setImageBitmap(bitmapImages[position]);
         
-        if(lock[position].equals("1"))
-        	holder.lockImageView.setImageResource(R.drawable.lock);
-        else 
+        
+        if(unlocked.get(1,false))
         	holder.lockImageView.setImageResource(0);
+        
+        else{
+	        if(lock[position].equals("1"))
+	        	holder.lockImageView.setImageResource(R.drawable.lock);
+	        else 
+	        	holder.lockImageView.setImageResource(0);
+        }
         
         if(nonVeg[position].equals("1")){
         	holder.vegNonveggImageView.setImageResource(R.drawable.non_veg_symbol);
@@ -92,6 +100,11 @@ public class ImageAdapter extends BaseAdapter {
 
         return convertView;
 	}
+	
+    public void setChecked(SparseBooleanArray ch){
+    	unlocked = ch;
+       notifyDataSetChanged();
+    }
 	
 	public class ViewHolder{
 		

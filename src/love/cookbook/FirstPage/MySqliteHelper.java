@@ -180,9 +180,9 @@ public class MySqliteHelper extends SQLiteOpenHelper{
 			cur = myDataBase.rawQuery("SELECT * FROM ZINGREDIENTS where ZRECIPE=? ORDER BY ZISKEY DESC"
 				, new String []{id});
 		else if(isNonVeg !=null)
-			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES WHERE ZISNONVEG = ?",new String [] {isNonVeg});
+			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES WHERE ZISNONVEG = ? AND ZCATEGORY != 'Duplicate'",new String [] {isNonVeg});
 		else
-			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES",null);
+			cur = myDataBase.rawQuery("SELECT * FROM ZRECIPES WHERE ZCATEGORY != 'Duplicate'",null);
 		
 		return cur;
 	}
@@ -191,10 +191,10 @@ public class MySqliteHelper extends SQLiteOpenHelper{
 	public Cursor getSearchResult(String tableName,String whereColumnName,String columnValue,String sortOption,String isNonVeg){
 		myDataBase =this.getReadableDatabase();
 		if(isNonVeg != null)
-			cur=myDataBase.rawQuery("SELECT * FROM "+tableName+" where "+whereColumnName+" LIKE '%' || ? || '%' AND ZISNONVEG = ? ORDER BY "+sortOption
+			cur=myDataBase.rawQuery("SELECT * FROM "+tableName+" where "+whereColumnName+" LIKE '%' || ? || '%' AND ZCATEGORY != 'Duplicate' AND ZISNONVEG = ?  ORDER BY "+sortOption
 				 ,new String [] {columnValue,isNonVeg});
 		else
-			cur=myDataBase.rawQuery("SELECT * FROM "+tableName+" where "+whereColumnName+" LIKE '%' || ? || '%' ORDER BY "+sortOption
+			cur=myDataBase.rawQuery("SELECT * FROM "+tableName+" where "+whereColumnName+" LIKE '%' || ? || '%' AND ZCATEGORY != 'Duplicate' ORDER BY "+sortOption
 					 ,new String [] {columnValue});
 		return cur;
 	}
@@ -240,4 +240,19 @@ public class MySqliteHelper extends SQLiteOpenHelper{
 		return myDataBase.update(tableName, args, "ZNAME = '"+dishName+ "'", null);
 		
 	}
+	
+	public int updateLockedValues(){
+		String columnName = "ZISLOCKED";
+		String tableName = "ZRECIPES";
+		myDataBase = this.getWritableDatabase();
+		ContentValues args = new ContentValues();
+		
+		//args.put(columnName,1);
+		args.put(columnName,0);
+		return myDataBase.update(tableName, args, "ZISLOCKED = 1", null);
+		
+		//To revert the status.
+		//return myDataBase.update(tableName, args, "Z_PK IN (4,6,9,21,23,25,34,37,41,42,43,45,46,49,50,51,54,63,67,74,78,82,92,96)", null);
+	}
+	
 }

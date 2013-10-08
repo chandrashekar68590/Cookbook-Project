@@ -2,8 +2,11 @@ package love.cookbook.FirstPage;
 
 
 
-import love.cookbook.FirstPage.util.*;
-import love.cookbook.FirstPage.util.IabHelper.OnIabPurchaseFinishedListener;
+import love.cookbook.FirstPage.util.IabHelper;
+import love.cookbook.FirstPage.util.IabResult;
+import love.cookbook.FirstPage.util.Inventory;
+import love.cookbook.FirstPage.util.Purchase;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,11 +14,15 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.*;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -38,10 +45,6 @@ public class ListViewSampleActivity extends SherlockListActivity {
 	public AlertDialog.Builder alert;
 	
 	private static final String TAG = "love.cookbook.FirstPage";
-	IabHelper mHelper;
-	String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi3krxChOC+uSgSGmBx6ntPjyOdZ1i+dEGEW3bCOZH1F4JI+eeb0Xd8l/iFWlfE9db2AkjVdzFrDyGP+xPe5Wc974XjzcC8MaWrubGF3/8ceVeKO/Inn5SUMupVUqUl033yGucTLBkVn9tmij5nsN62fjdljnaMhmLDGB9NJ8opDWPX+Wp4ZKQnQkpNM6K1bcZp9nhxNu539a/I4tpTss4WXeQheWc/u+O0rzJUvBE4ADSUF70BDovoq5WguH+MPMtE/lxWieb4JNnoJW4Q2YpmS9ePTmBySXFTW8Vvy0GmQxTsRYvLG5yRlpexSXyuez4i1y2PV5QUGrNvyyFAe47wIDAQAB";
-	final String ITEM_SKU = "android.test.purchased";
-
 	
 	String eachIngredientsImageName [];
 
@@ -68,22 +71,9 @@ public class ListViewSampleActivity extends SherlockListActivity {
 
         setContentView(R.layout.list_main);
 		dbHelper = new MySqliteHelper(this);
-        
-    	mHelper = new IabHelper(this, base64EncodedPublicKey);
-    
-    	mHelper.startSetup(new 
-		IabHelper.OnIabSetupFinishedListener() {
-			@Override
-			public void onIabSetupFinished(IabResult result) {
-				// TODO Auto-generated method stub
-				System.out.println("Inside Onsetup finished");
-				 if (!result.isSuccess()) 
-					 Log.d(TAG, "In-app Billing setup failed: " + result);
-	    	     else             
-	    	    	 Log.d(TAG, "In-app Billing is set up OK"+result);
-			}
-    	});
 		
+		setUpBillingConnection();
+        
 		list=(ListView)findViewById(android.R.id.list);
 		
 		final FirstPageActivity firstPage = new FirstPageActivity();
@@ -113,6 +103,7 @@ public class ListViewSampleActivity extends SherlockListActivity {
        
         adapter=new LazyAdapter	(this, ARRAY.dishes,ARRAY.description,ARRAY.timeToPrepare,ARRAY.bitmapImages,ARRAY.lock,ARRAY.nonVeg);
         list.setAdapter(adapter);
+        adapter.setChecked(VARIABLES.unlocked);
         
         getListView().setDivider(null);
         getListView().setDividerHeight(0);
@@ -120,6 +111,7 @@ public class ListViewSampleActivity extends SherlockListActivity {
     	list.setOnItemClickListener(new OnItemClickListener(){
     		String columnName;
     		String whereColumnName;
+    		
     		String recipeName;
     		
     		Cursor cur;
@@ -209,12 +201,15 @@ public class ListViewSampleActivity extends SherlockListActivity {
 	    			startActivity(intent);
    	   		    }
    	   		    else{
+   	   		    	VARIABLES.unlocked.get(1,false);
+   	   		    	
 		   	   		  alert.setTitle("Buy Dish");
-			 	    	alert.setMessage("Do you want to purchase this?");
+			 	    	alert.setMessage("Do you want to unlock all locked recipes?");
 			 	    	
 			 	    	 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 		                 public void onClick(DialogInterface dialog, int which) {
 		                	 
+
 		                	 initiateBillingProcess();
 		                 }
 		
@@ -233,8 +228,27 @@ public class ListViewSampleActivity extends SherlockListActivity {
     	});
     	
     }
+
+    
+    public void setUpBillingConnection(){
+    	VARIABLES.mHelper = new IabHelper(this, VARIABLES.base64EncodedPublicKey);
+        
+    	VARIABLES.mHelper.startSetup(new 
+		IabHelper.OnIabSetupFinishedListener() {
+			@Override
+			public void onIabSetupFinished(IabResult result) {
+				// TODO Auto-generated method stub
+				System.out.println("Inside Onsetup finished");
+				 if (!result.isSuccess()) 
+					 Log.d(TAG, "In-app Billing setup failed: " + result);
+	    	     else             
+	    	    	 Log.d(TAG, "In-app Billing is set up OK"+result);
+			}
+    	});
+    }
     
     public void initiateBillingProcess(){
+
     	    	
     	final IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
     			  new IabHelper.OnConsumeFinishedListener() {
@@ -243,6 +257,11 @@ public class ListViewSampleActivity extends SherlockListActivity {
 
     			 if (result.isSuccess()) {		    	 
     				 	System.out.println("Item Consumed");
+    				 	dbHelper.updateLockedValues();
+    				 	VARIABLES.unlocked.put(1, true);
+    				 	
+    				 	adapter.setChecked(VARIABLES.unlocked);
+    				
     			 } else {
     			         // handle error
     			 }
@@ -258,11 +277,12 @@ public class ListViewSampleActivity extends SherlockListActivity {
     		      if (result.isFailure()) {
     			  // Handle failure
     		      } else {
-    	                 mHelper.consumeAsync(inventory.getPurchase(ITEM_SKU), 
+    		    	  VARIABLES.mHelper.consumeAsync(inventory.getPurchase(VARIABLES.ITEM_SKU), 
     				mConsumeFinishedListener);
     		      }
     	    }
     	};
+    	
 
     	
     	IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener 
@@ -275,8 +295,8 @@ public class ListViewSampleActivity extends SherlockListActivity {
 		    	      // Handle error
 		    	      return;
 		    	 }      
-		    	 else if (purchase.getSku().equals(ITEM_SKU)) {
-		    	   mHelper.queryInventoryAsync(mReceivedInventoryListener);
+		    	 else if (purchase.getSku().equals(VARIABLES.ITEM_SKU)) {
+		    		 VARIABLES.mHelper.queryInventoryAsync(mReceivedInventoryListener);
 		    	   System.out.println("Item purchased");
 		    	}
 				
@@ -284,7 +304,7 @@ public class ListViewSampleActivity extends SherlockListActivity {
     	};
     	
 		
-    	mHelper.launchPurchaseFlow(this, ITEM_SKU, 10001, mPurchaseFinishedListener,"");
+    	VARIABLES.mHelper.launchPurchaseFlow(this, VARIABLES.ITEM_SKU, 10001, mPurchaseFinishedListener,"");
 
 	}
     
@@ -293,9 +313,11 @@ public class ListViewSampleActivity extends SherlockListActivity {
          Intent data) 
     {
     	System.out.println("Result: "+resultCode+" Request: "+requestCode);
-          if (!mHelper.handleActivityResult(requestCode, 
+          if (!VARIABLES.mHelper.handleActivityResult(requestCode, 
                   resultCode, data)) {     
         	super.onActivityResult(requestCode, resultCode, data);
+        	
+        	
           }
     }
     
@@ -310,14 +332,18 @@ public class ListViewSampleActivity extends SherlockListActivity {
 		   }
 		   
 	   }
+	   
     protected void onDestroy(){
     	super.onDestroy();
     	unbindDrawables(findViewById(R.id.RootView));
         System.gc();
         
-        if (mHelper != null) 
-        	mHelper.dispose();
-        mHelper = null; 
+        /* To be uncommented at the end
+        
+        if (VARIABLES.mHelper != null) 
+        	VARIABLES.mHelper.dispose();
+        VARIABLES.mHelper = null; 
+        */
     }
     
     private void unbindDrawables(View view) {

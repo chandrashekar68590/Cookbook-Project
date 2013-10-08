@@ -1,5 +1,8 @@
 package love.cookbook.FirstPage;
 
+import android.util.SparseBooleanArray;
+import love.cookbook.FirstPage.util.IabHelper;
+
 public final class VARIABLES {
 	
 	//Database column name variables
@@ -14,7 +17,15 @@ public final class VARIABLES {
 	public static final String isFavouriteColumn="ZISFAVOURITE";
 	public static final String whereColumnName="ZCATEGORY";
 	
+	
+	
 	public static final String PREFS_NAME = "MyPrefsFile";
+	
+	//In-App Billing Variables.
+	public static IabHelper mHelper;
+	public static SparseBooleanArray unlocked = new SparseBooleanArray();
+	public static final String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi3krxChOC+uSgSGmBx6ntPjyOdZ1i+dEGEW3bCOZH1F4JI+eeb0Xd8l/iFWlfE9db2AkjVdzFrDyGP+xPe5Wc974XjzcC8MaWrubGF3/8ceVeKO/Inn5SUMupVUqUl033yGucTLBkVn9tmij5nsN62fjdljnaMhmLDGB9NJ8opDWPX+Wp4ZKQnQkpNM6K1bcZp9nhxNu539a/I4tpTss4WXeQheWc/u+O0rzJUvBE4ADSUF70BDovoq5WguH+MPMtE/lxWieb4JNnoJW4Q2YpmS9ePTmBySXFTW8Vvy0GmQxTsRYvLG5yRlpexSXyuez4i1y2PV5QUGrNvyyFAe47wIDAQAB";
+	public static final String ITEM_SKU = "android.test.purchased";
 
 	//SMS variables
 	public static final String queryString = "Android";
