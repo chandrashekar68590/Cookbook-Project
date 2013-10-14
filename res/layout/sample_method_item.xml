@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/relative_layout_root"
     android:layout_height="match_parent" >
 
     <Button
@@ -9,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        
         android:text=" Beat eggs in a mixing bowl. Add in sugar and oil. Beat this mixture.             adsvasdvvvvvvvvvv" 
         android:background="@drawable/ingredientrow"
         android:textColor="@android:color/black"/>
@@ -29,11 +31,26 @@
         android:layout_alignRight="@+id/button1"
         android:layout_marginRight="15dp" />
 
-    <ImageView
-        android:id="@+id/timerImageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <Button
+        android:id="@+id/timerButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/button1" />
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_marginTop="-5dp"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/timerButton"
+        android:layout_alignBottom="@+id/timerButton"
+        android:layout_alignRight="@+id/timerButton"
+        android:layout_marginRight="19dp"
+        
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:textSize="8sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

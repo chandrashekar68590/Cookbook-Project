@@ -8,12 +8,14 @@ import android.view.View;
 
 public class DrawView extends View {
 	Paint paint = new Paint();
-	int x,y;
+	int startY,stopY,startX;
 
-    public DrawView(Context context,int x,int y) {
+    public DrawView(Context context,int startY,int stopY,int startX) {
         super(context);
-        this.x=x;
-        this.y=y;
+        this.startY=startY;
+        this.stopY=stopY;
+        this.startX=startX;
+        System.out.println("Inside cons");
     }
 
     @Override
@@ -21,8 +23,8 @@ public class DrawView extends View {
     	super.onDraw(canvas);
     	paint.setColor(Color.WHITE);
     	paint.setStrokeWidth(3);
-    	System.out.println("X: "+x);
-        canvas.drawLine(x, y+200, x, y+40, paint);
+    	System.out.println(startX+" "+startY+" "+stopY);
+        canvas.drawLine(startX, startY, startX, stopY, paint);
     }
 
 }

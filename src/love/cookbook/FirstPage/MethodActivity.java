@@ -116,6 +116,7 @@ public class MethodActivity extends SherlockActivity {
 	                	t[position] = new Toast(getApplicationContext());
 	                	t[position].setGravity(Gravity.BOTTOM, 0, 0);
 	                	t[position].setView(layout);
+	                	
 		                
 		                if(!ARRAY.timeToPrepare[position].equals("NA")  && checked.get(position,false) && !flag){
 			            	//playAudio(); 

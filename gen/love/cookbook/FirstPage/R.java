@@ -1303,6 +1303,7 @@ containing a value of this type.
     public static final class id {
         public static final int RootView=0x7f05003a;
         public static final int RootView1=0x7f050061;
+        public static final int ScrollView01=0x7f050063;
         public static final int abs__action_bar=0x7f050027;
         public static final int abs__action_bar_container=0x7f050026;
         public static final int abs__action_bar_subtitle=0x7f050016;
@@ -1369,11 +1370,13 @@ containing a value of this type.
         public static final int lockImageView=0x7f050057;
         public static final int mainCourseButton=0x7f050043;
         public static final int methodButton=0x7f050060;
+        public static final int my_linear_layout=0x7f050064;
         public static final int nonVegcheckBox=0x7f050051;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050001;
         public static final int preperationTimeTextView=0x7f050056;
         public static final int recipeTextView=0x7f05005e;
+        public static final int relative_layout_root=0x7f050065;
         public static final int searchEditText1=0x7f05003b;
         public static final int searchbutton1=0x7f05003c;
         public static final int servingTextView=0x7f05005f;
@@ -1392,9 +1395,9 @@ containing a value of this type.
         public static final int textView4=0x7f050046;
         public static final int textView5=0x7f050047;
         public static final int textView6=0x7f050048;
-        public static final int timerImageView=0x7f050063;
+        public static final int timerButton=0x7f050066;
         public static final int title_indicator=0x7f050038;
-        public static final int toast_layout_root=0x7f050064;
+        public static final int toast_layout_root=0x7f050067;
         public static final int top=0x7f050014;
         public static final int triangle=0x7f050011;
         public static final int underline=0x7f050012;
@@ -1451,11 +1454,12 @@ containing a value of this type.
         public static final int method_list_main=0x7f030024;
         public static final int sample=0x7f030025;
         public static final int sample_method=0x7f030026;
-        public static final int sample_method_item=0x7f030027;
-        public static final int sherlock_spinner_dropdown_item=0x7f030028;
-        public static final int sherlock_spinner_item=0x7f030029;
-        public static final int tab_main=0x7f03002a;
-        public static final int toast_custom_layout=0x7f03002b;
+        public static final int sample_method1=0x7f030027;
+        public static final int sample_method_item=0x7f030028;
+        public static final int sherlock_spinner_dropdown_item=0x7f030029;
+        public static final int sherlock_spinner_item=0x7f03002a;
+        public static final int tab_main=0x7f03002b;
+        public static final int toast_custom_layout=0x7f03002c;
     }
     public static final class raw {
         public static final int facebook_ringtone_pop=0x7f040000;
