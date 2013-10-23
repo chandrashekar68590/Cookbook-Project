@@ -1,9 +1,6 @@
 package love.cookbook.FirstPage;
 
-import love.cookbook.FirstPage.util.IabHelper;
-import love.cookbook.FirstPage.util.IabResult;
-import love.cookbook.FirstPage.util.Inventory;
-import love.cookbook.FirstPage.util.Purchase;
+import love.cookbook.FirstPage.util.*;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.*;
@@ -112,9 +109,8 @@ public class Fragment2 extends SherlockFragment {
         adapter.setChecked(VARIABLES.unlocked);
         
        	list.setOnItemClickListener(new OnItemClickListener(){
-    		String tableName;
-    		String columnName;
-    		String whereColumnName;
+
+    		String whereColumnName= "ZNAME";
     		String recipeName;
     		
     		Cursor cur;
@@ -129,17 +125,12 @@ public class Fragment2 extends SherlockFragment {
     				long id) {
     			Intent intent;
     			String recipeID;
-    			
-    			columnName = "Z_PK";
-    			whereColumnName = "ZNAME";
-    			
+    			  			
     			// TODO Auto-generated method stub    		
     		      LinearLayout ll = (LinearLayout) view;
-    			//View view1 = list.getChildAt(position);
     			TextView tv = (TextView)ll.findViewById(R.id.textView1);
     			recipeName = tv.getText().toString();
 
-    			//System.out.println("Recipe name is: "+recipeName);
     			cur = dbHelper.getTableValues(VARIABLES.tabelName,whereColumnName, recipeName,null,"Z_PK");
     			    			
     			cur.moveToFirst();
@@ -162,7 +153,6 @@ public class Fragment2 extends SherlockFragment {
    	   		    columnIndex = cur.getColumnIndex("ZISLOCKED");
    	   		    lock = cur.getString(columnIndex);
    	   		    
-   	   		    //System.out.println("The Recipe ID is: "+recipeID);
    	   		    
    	   		    if(lock.equals("0")){     //Commented for next release.
 	   	   		    cur = dbHelper.getIngredients(recipeID,null);
@@ -332,23 +322,7 @@ public class Fragment2 extends SherlockFragment {
   					ARRAY.timeToPrepareString[i] = "Around an Hour";
   				else if(ARRAY.timeToPrepare[i].equals("90"))
   					ARRAY.timeToPrepareString[i] = "Around 90 mins";
-  			}
-  			
-			/*	
-  			for(int i=0;i<ARRAY.recipeID.length;i++){
-  				cur1 = dbHelper.getKeyIngredients(ARRAY.recipeID[i]);
-  				ARRAY.recipeKeyIngredient = new String[cur1.getCount()];
-  				ARRAY.recipeKeyIngredient = firstPage.createDishArray(cur1, "ZNAME");
-  				//System.out.println(ARRAY.recipeID[i]+": "+ARRAY.recipeKeyIngredient.length);
-  				
-  				if(ARRAY.recipeKeyIngredient.length == 1)
-  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase();
-  				else if (ARRAY.recipeKeyIngredient.length == 2)
-  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase()+" and "+ARRAY.recipeKeyIngredient[1].toUpperCase();
-  				else
-  					ARRAY.recipeDescription[i] = " ";
-  			}
-  			 */ 		
+  			}	
       					
   			cur.close();
   			dbHelper.close();

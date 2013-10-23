@@ -1,12 +1,9 @@
 package love.cookbook.FirstPage;
 
-
-
 import love.cookbook.FirstPage.util.IabHelper;
 import love.cookbook.FirstPage.util.IabResult;
 import love.cookbook.FirstPage.util.Inventory;
 import love.cookbook.FirstPage.util.Purchase;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +11,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -160,8 +156,6 @@ public class ListViewSampleActivity extends SherlockListActivity {
    	   		    
    	   		    cur.close();
    	   		    dbHelper.close();
-   	   		    
-   	   		    //System.out.println("The Recipe ID is: "+recipeID);
    	   		    
    	   		    if(lock.equals("0")){		//Commented for next release
 	   	   		    cur = dbHelper.getIngredients(recipeID,null);

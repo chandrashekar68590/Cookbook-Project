@@ -7,11 +7,11 @@
      <TextView
         android:id="@+id/textView1"
         android:layout_width="320dp"
-        android:layout_height="44dp"
+        android:layout_height="49dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/toggle_bg"
+        android:background="@drawable/navigationbar"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
      <ListView
@@ -30,6 +30,7 @@
          android:id="@+id/button1"
          android:layout_width="80dp"
          android:layout_height="42dp"
+         android:layout_above="@+id/listView1"
          android:layout_alignParentLeft="true"
          android:layout_alignParentTop="true"
          android:layout_marginLeft="220dp"
@@ -39,6 +40,7 @@
          android:id="@+id/methodButton"
          android:layout_width="80dp"
          android:layout_height="42dp"
+         android:layout_alignBottom="@+id/textView1"
          android:layout_alignParentRight="true"
          android:layout_alignParentTop="true"
          android:layout_marginRight="220dp"

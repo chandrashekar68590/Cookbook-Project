@@ -1,26 +1,17 @@
 package love.cookbook.FirstPage;
 
-import love.cookbook.FirstPage.util.IabHelper;
-import love.cookbook.FirstPage.util.IabResult;
-import love.cookbook.FirstPage.util.Inventory;
-import love.cookbook.FirstPage.util.Purchase;
+import love.cookbook.FirstPage.util.*;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -30,7 +21,6 @@ public class Fragment1 extends SherlockFragment {
 	public String sortOption;
 	private MySqliteHelper dbHelper;
 	private FirstPageActivity firstPage;
-	private MainPagerAdapter mainPageAdapter;
 	private Cursor cur;
 	private BitmapDecoder bitmapDecoder;
 	public ListViewSampleActivity listViewSampleActivity;
@@ -40,9 +30,6 @@ public class Fragment1 extends SherlockFragment {
 	public AlertDialog.Builder alert;
 	
 	public String packageName;
-	
-	private ViewPager mPager;
-	private MainPagerAdapter mAdapter;
 	
 	Intent intent;
 	
@@ -101,7 +88,6 @@ public class Fragment1 extends SherlockFragment {
 
         this.facebookConnector = new FacebookConnector(VARIABLES.FACEBOOK_APPID, getActivity(), getActivity().getApplicationContext(), new String[] {VARIABLES.FACEBOOK_PERMISSION});
 		dbHelper = new MySqliteHelper(getActivity());
-		final FirstPageActivity firstPage = new FirstPageActivity();
 		
 		ARRAY.bitmapImages = new Bitmap[ARRAY.gridImageName.length];
 	        
@@ -124,9 +110,8 @@ public class Fragment1 extends SherlockFragment {
         adapter.setChecked(VARIABLES.unlocked);
         
        	list.setOnItemClickListener(new OnItemClickListener(){
-    		String tableName;
-    		String columnName;
-    		String whereColumnName;
+    		
+    		String whereColumnName= "ZNAME";
     		String recipeName;
     		
     		Cursor cur;
@@ -135,24 +120,18 @@ public class Fragment1 extends SherlockFragment {
     		String ingredientsHindiname [];
     		String quantity [];
     		String lock;
-    		int cursorEnd,cursorCount;
+    		int cursorEnd;
     		
 
     		public void onItemClick(AdapterView<?> parent, View view, int position,
     				long id) {
     			
     			String recipeID;
-    			
-    			columnName = "Z_PK";
-    			whereColumnName = "ZNAME";
-    			
+    			     			
     			// TODO Auto-generated method stub    		
     		      LinearLayout ll = (LinearLayout) view;
-    			//View view1 = list.getChildAt(position);
     			TextView tv = (TextView)ll.findViewById(R.id.textView1);
     			recipeName = tv.getText().toString();
-
-    			//System.out.println("Position is : "+position);
     			
     			cur = dbHelper.getTableValues(VARIABLES.tabelName,whereColumnName, recipeName,null,"Z_PK");
     			    			
@@ -177,9 +156,7 @@ public class Fragment1 extends SherlockFragment {
    	   		    cur.moveToFirst();
    	   		    columnIndex = cur.getColumnIndex("ZISLOCKED");
    	   		    lock = cur.getString(columnIndex);
-   	   		    
-   	   		    //System.out.println("The Recipe ID is: "+recipeID);
-   	   		    
+   	   		       	   		    
    	   		    if(lock.equals("0")){		//Commented for next release
 	   	   		    cur = dbHelper.getIngredients(recipeID,null);
 	      	  		cursorEnd = cur.getCount();
@@ -318,7 +295,6 @@ public class Fragment1 extends SherlockFragment {
 				}
 	    	};
 	    	
-			System.out.println("Before Launch");
 			VARIABLES.mHelper.launchPurchaseFlow(getActivity(), VARIABLES.ITEM_SKU, 10001, mPurchaseFinishedListener,"");
 	    	//startActivityForResult(new Intent(), 10001);
 	    	
@@ -380,8 +356,6 @@ public class Fragment1 extends SherlockFragment {
   			for(int i=0;i<ARRAY.imageName.length;i++)
   				ARRAY.gridImageName[i] = "grid_"+ARRAY.imageName[i];
 			
-  			
-  			//ARRAY.recipeDescription = new String[ARRAY.recipeID.length];
   			ARRAY.timeToPrepareString = new String[cur.getCount()];
   		
   			for(int i=0;i<ARRAY.timeToPrepare.length;i++){

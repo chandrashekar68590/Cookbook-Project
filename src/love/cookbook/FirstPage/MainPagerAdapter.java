@@ -1,7 +1,6 @@
 package love.cookbook.FirstPage;
 
 import java.util.List;
-
 import android.support.v4.app.*;
 
 public class MainPagerAdapter extends FragmentPagerAdapter{

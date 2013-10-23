@@ -43,4 +43,7 @@ public final class VARIABLES {
 	public static final int FACEBOOK = 2;
 	public static final int FAVOURITE = 3;
 	public static final int MAIL = 4;
+	public static int navigationBarHeight;
+	public static int ingredientButtonWidth;
+	public static int methodButtonWidth;
 }

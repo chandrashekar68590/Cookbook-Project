@@ -1,41 +1,13 @@
 package love.cookbook.FirstPage;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
-import android.util.Base64;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
+import android.app.*;
+import android.content.*;
+import android.database.*;
+import android.os.*;
+import android.view.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 
 public class FirstPageActivity extends Activity {
 	
@@ -52,7 +24,6 @@ public class FirstPageActivity extends Activity {
 	NotificationManager notificationManager;
 	
 	private MySqliteHelper dbHelper;
-	private MethodActivity methodActivity;
 	private Cursor cur;
 	int columnIndex;
 	int cursorEnd;
@@ -81,42 +52,6 @@ public class FirstPageActivity extends Activity {
         public void handleMessage(Message msg) {
         }
     }
-
-    /*
-    BroadcastReceiver receiver = new BroadcastReceiver() {
-    	
-		@Override
-		public void onReceive(Context _context, Intent _intent) {
-			// TODO Auto-generated method stub
-			SmsManager sms = SmsManager.getDefault();
-			Bundle bundle = _intent.getExtras();
-			if (bundle != null) {
-				Object[] pdus = (Object[]) bundle.get("pdus");
-				SmsMessage[] messages = new SmsMessage[pdus.length];
-				for (int i = 0; i < pdus.length; i++)
-					messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
-				for (SmsMessage message : messages) {
-					String msg = message.getMessageBody();
-					
-					System.out.println("Message Received is: "+ msg);
-					String to = message.getOriginatingAddress();
-					System.out.println("Received message from: "+ to);
-					String cutString = to.substring(7,11);
-					System.out.println("Cut string is: "+ cutString);
-					
-					if (msg.equalsIgnoreCase(VARIABLES.queryString)) {
-						System.out.println("Inside IF");
-						String out = "I Received your message";
-						sms.sendTextMessage("5556", null, out, null, null);
-						//Intent i = new Intent(FirstPageActivity.this,SimpleActivity.class);
-						//startActivity(i);
-					}
-				}
-			}
-			
-		}
-    	
-    };*/
 	
     /** Called when the activity is first created. */
     @Override
@@ -126,7 +61,6 @@ public class FirstPageActivity extends Activity {
         //This will remove default the title bar which will be on the top of the activity 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
-        methodActivity = new MethodActivity();
         /*
         long heapsize = Runtime.getRuntime().totalMemory();
         long heapMaxSize = Runtime.getRuntime().maxMemory();
@@ -216,13 +150,7 @@ public class FirstPageActivity extends Activity {
         
         settingButton = (Button)findViewById(R.id.settingButton);
         settingButton.setOnClickListener(new SettingButtonListener());
-         /*
-        notificationButton = (Button)findViewById(R.id.notificationButton);
-        notificationButton.setOnClickListener(new NotificationButtonListener());
-        
-        SMSButton = (Button)findViewById(R.id.SMSbutton);
-        SMSButton.setOnClickListener(new SMSButtonListener());
-        */
+   
     }
    
     
@@ -255,60 +183,6 @@ public class FirstPageActivity extends Activity {
         }
     }
 
-    
-    /*
-    private class SMSButtonListener extends Object implements android.view.View.OnClickListener{
-
-		@Override
-		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			SmsManager smsManager = SmsManager.getDefault();
-			String sendTo = "07875067527";
-			String myMessage = "Android supports programmatic SMS messaging!";
-			smsManager.sendTextMessage(sendTo, null, myMessage, null, null);
-			Toast t = Toast.makeText(getApplicationContext(), "SMS Sent", Toast.LENGTH_SHORT);
-			t.show();
-			
-		}
-    
-    }
-    private class NotificationButtonListener extends Object implements android.view.View.OnClickListener{
-
-		@Override
-		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			
-			int icon = R.drawable.ic_launcher;
-			String tickerText = "New Recipe added";
-			long when = System.currentTimeMillis();
-			newNotification = new Notification(icon, tickerText, when);
-			long[] vibrate = new long[] { 1000, 1000, 1000};
-			
-			//Setting different notification properties.
-			newNotification.number++; 
-			newNotification.vibrate = vibrate;
-			newNotification.ledARGB = Color.RED;
-			newNotification.ledOffMS = 0;
-			newNotification.ledOnMS = 1;
-			newNotification.flags = newNotification.flags | Notification.FLAG_SHOW_LIGHTS;
-			
-			String svcName = Context.NOTIFICATION_SERVICE;
-			notificationManager = (NotificationManager)getSystemService(svcName);
-			Context context = getApplicationContext();
-			String expandedText = "This is an extended text to be displayed in the bottom";
-			String expandedTitle = "New recipe";
-			
-			Intent startActivityIntent = new Intent(FirstPageActivity.this, SimpleActivity.class);
-			PendingIntent launchIntent = PendingIntent.getActivity(context,0,startActivityIntent,0);
-			
-			newNotification.setLatestEventInfo(context, expandedTitle, expandedText, launchIntent);
-			
-			notificationManager.notify(NOTIFICATION_ID, newNotification);
-					
-		}
-    	
-    }
-    */
     /*Function to create an array from the result of 
      * select query to be used to pass it to respective activities.
      */
@@ -417,10 +291,7 @@ public class FirstPageActivity extends Activity {
 			
 			catagory = "Meal";
 			
-		
     		intent = new Intent(FirstPageActivity.this,MainCourseTab.class);
-    		Toast t = Toast.makeText(getApplicationContext(), "Main Course Activity", Toast.LENGTH_SHORT);
-			t.show();
 			intent.putExtra("NUMBEROFTABS", noOfTabs);
 			intent.putExtra("TAB1", tab1);
 			intent.putExtra("TAB2", tab2);
@@ -447,8 +318,6 @@ public class FirstPageActivity extends Activity {
 			catagory="Breakfast";
 
     		intent = new Intent(FirstPageActivity.this,MainCourseTab.class);
-    		Toast t = Toast.makeText(getApplicationContext(), "Breakfast Activity", Toast.LENGTH_SHORT);
-			t.show();
 			intent.putExtra("NUMBEROFTABS", noOfTabs);
 			intent.putExtra("TAB1", tab1);
 			intent.putExtra("CATAGORY",catagory);
@@ -474,8 +343,6 @@ public class FirstPageActivity extends Activity {
 			catagory = "Sweet Tooth!";
 			
     		intent = new Intent(FirstPageActivity.this,MainCourseTab.class);
-    		Toast t = Toast.makeText(getApplicationContext(), "SweetTooth Activity", Toast.LENGTH_SHORT);
-			t.show();
 			intent.putExtra("NUMBEROFTABS", noOfTabs);
 			intent.putExtra("TAB1", tab1);
 			intent.putExtra("TAB2", tab2);
@@ -499,13 +366,9 @@ public class FirstPageActivity extends Activity {
 			tab2 = "Muffins";
 			tab2SubCatagory="Muffins";
 			
-			
 			catagory = "Baker's delight";
 			
-			
     		intent = new Intent(FirstPageActivity.this,MainCourseTab.class);
-    		Toast t = Toast.makeText(getApplicationContext(), "Baker's Delight Activity", Toast.LENGTH_SHORT);
-			t.show();
 			intent.putExtra("NUMBEROFTABS", noOfTabs);
 			intent.putExtra("TAB1", tab1);
 			intent.putExtra("TAB2", tab2);
@@ -570,30 +433,10 @@ public class FirstPageActivity extends Activity {
   				else if(ARRAY.timeToPrepare[i].equals("90"))
   					ARRAY.timeToPrepareString[i] = "Around 90 mins";
   			}
-  			
-				
-			/*
-  			for(int i=0;i<ARRAY.recipeID.length;i++){
-  				cur1 = dbHelper.getKeyIngredients(ARRAY.recipeID[i]);
-  				ARRAY.recipeKeyIngredient = new String[cur1.getCount()];
-  				ARRAY.recipeKeyIngredient = createDishArray(cur1, "ZNAME");
-  				//System.out.println(ARRAY.recipeID[i]+": "+ARRAY.recipeKeyIngredient.length);
-  				
-  				if(ARRAY.recipeKeyIngredient.length == 1)
-  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase();
-  				else if (ARRAY.recipeKeyIngredient.length == 2)
-  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase()+" and "+ARRAY.recipeKeyIngredient[1].toUpperCase();
-  				else
-  					ARRAY.recipeDescription[i] = " ";
-  			}
-  			 */ 			
-  			//cur1.close();
     		
     		cur.close();
     		
     		intent = new Intent(FirstPageActivity.this,ListViewSampleActivity.class);
-    		Toast t = Toast.makeText(getApplicationContext(), "Favourite Activity", Toast.LENGTH_SHORT);
-			t.show();
 			intent.putExtra("DISHES", ARRAY.dishes);
 			intent.putExtra("DESCRIPTION", ARRAY.description);
 			intent.putExtra("TIMETOPREPARE", ARRAY.timeToPrepareString);
@@ -612,8 +455,6 @@ public class FirstPageActivity extends Activity {
     	public void onClick(View arg0) {
     		intent = new Intent(FirstPageActivity.this,GalleryActivity.class);
     		
-    		Toast t = Toast.makeText(getApplicationContext(), "Gallery Activity", Toast.LENGTH_SHORT);
-			t.show();
     		startActivity(intent);
     	}
 	
@@ -624,11 +465,9 @@ public class FirstPageActivity extends Activity {
 
         public void onClick(View arg0) {
 			
-        	
 			int countOfCursor;
 			System.out.println("Search button clicked");
-			
-						
+									
 	        searchEditText = (EditText)findViewById(R.id.searchEditText1);
 			String searchText = searchEditText.getText().toString();
 			sortOption = getSortOption();
@@ -682,27 +521,7 @@ public class FirstPageActivity extends Activity {
 		  				else if(ARRAY.timeToPrepare[i].equals("90"))
 		  					ARRAY.timeToPrepareString[i] = "Around 90 mins";
 		  			}
-					
-					/*
-					ARRAY.recipeDescription = new String[ARRAY.recipeID.length];
-					
-		  			for(int i=0;i<ARRAY.recipeID.length;i++){
-		  				cur1 = dbHelper.getKeyIngredients(ARRAY.recipeID[i]);
-		  				ARRAY.recipeKeyIngredient = new String[cur1.getCount()];
-		  				ARRAY.recipeKeyIngredient = createDishArray(cur1, "ZNAME");
-		  				//System.out.println(ARRAY.recipeID[i]+": "+ARRAY.recipeKeyIngredient.length);
-		  				
-		  				if(ARRAY.recipeKeyIngredient.length == 1)
-		  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase();
-		  				else if (ARRAY.recipeKeyIngredient.length == 2)
-		  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase()+" and "+ARRAY.recipeKeyIngredient[1].toUpperCase();
-		  				else
-		  					ARRAY.recipeDescription[i] = " ";
-		  			}
-		  			
-		  			  		
-		  			 */  			
-		    		
+			
 		    		cur.close();
 		    		dbHelper.close();
 	

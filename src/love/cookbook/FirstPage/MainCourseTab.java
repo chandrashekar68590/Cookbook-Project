@@ -4,21 +4,13 @@ package love.cookbook.FirstPage;
 import java.util.ArrayList;
 import java.util.List;
 
-import love.cookbook.FirstPage.util.IabHelper;
-import love.cookbook.FirstPage.util.IabResult;
-import love.cookbook.FirstPage.util.Inventory;
-import love.cookbook.FirstPage.util.Purchase;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.SparseBooleanArray;
 import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -35,10 +27,6 @@ public class MainCourseTab extends SherlockFragmentActivity{
 	private MySqliteHelper dbHelper;
 	private FirstPageActivity firstPage;
 	private Cursor cur;
-	
-	
-	
-	
 	public String sortOption;
 	public int noOfTabs;
 	public String tab1;
@@ -50,8 +38,6 @@ public class MainCourseTab extends SherlockFragmentActivity{
 	
 	Intent intent;
 	SharedPreferences settings;
-	private SparseBooleanArray unlocked = new SparseBooleanArray();
-	
 	
 	//Variables used for scroll tabs
 	
@@ -152,24 +138,6 @@ public class MainCourseTab extends SherlockFragmentActivity{
         
     }
 	
-	/*
-	public void setUpBillingConnection(){
-    	mHelper = new IabHelper(this, VARIABLES.base64EncodedPublicKey);
-        
-    	mHelper.startSetup(new 
-		IabHelper.OnIabSetupFinishedListener() {
-			@Override
-			public void onIabSetupFinished(IabResult result) {
-				// TODO Auto-generated method stub
-				System.out.println("Inside Onsetup finished");
-				 if (!result.isSuccess()) 
-					 System.out.println("In-app Billing setup failed: " + result);
-	    	     else             
-	    	    	 System.out.println("In-app Billing is set up OK"+result);
-			}
-    	});
-	}
-	*/
 	
 	 @Override
 		public void onActivityResult(int requestCode, int resultCode, Intent data) 
@@ -266,25 +234,9 @@ public class MainCourseTab extends SherlockFragmentActivity{
     		  				
     		  				System.out.println("Time: "+ARRAY.timeToPrepareString);
     		  			}
-    		  			
-    					/*
-    		  			for(int i=0;i<ARRAY.recipeID.length;i++){
-    		  				cur1 = dbHelper.getKeyIngredients(ARRAY.recipeID[i]);
-    		  				ARRAY.recipeKeyIngredient = new String[cur1.getCount()];
-    		  				ARRAY.recipeKeyIngredient = firstPage.createDishArray(cur1, "ZNAME");
-    		  				//System.out.println(ARRAY.recipeID[i]+": "+ARRAY.recipeKeyIngredient.length);
-    		  				
-    		  				if(ARRAY.recipeKeyIngredient.length == 1)
-    		  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase();
-    		  				else if (ARRAY.recipeKeyIngredient.length == 2)
-    		  					ARRAY.recipeDescription[i] = "The dish is made of "+ARRAY.recipeKeyIngredient[0].toUpperCase()+" and "+ARRAY.recipeKeyIngredient[1].toUpperCase();
-    		  				else
-    		  					ARRAY.recipeDescription[i] = " ";
-    		  			}
-    		  			  */			 		    		
+    		  					 		    		
     		    		cur.close();
     		    	
-    	
     		    		intent = new Intent(getApplicationContext(),ListViewSampleActivity.class);
     					intent.putExtra("DISHES", ARRAY.dishes);
     					intent.putExtra("DESCRIPTION", ARRAY.description);

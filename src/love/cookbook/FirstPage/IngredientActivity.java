@@ -5,8 +5,6 @@ import java.net.MalformedURLException;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.*;
-
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.*;
@@ -25,7 +23,8 @@ public class IngredientActivity extends SherlockActivity {
 	String eachIngredientsImageName [];
 	int eachImageID [];
 	public String packageName;
-
+	TextView textView1;
+	Button ingredientButton,methodButton;
 	
 	private final Handler mFacebookHandler = new Handler();
 	private FacebookConnector facebookConnector;
@@ -33,9 +32,6 @@ public class IngredientActivity extends SherlockActivity {
     final Runnable mUpdateFacebookNotification = new Runnable() {
         public void run() {
         	Toast.makeText(getBaseContext(),  "Posted on Facebook wall!", Toast.LENGTH_LONG).show();
-        	
-        	
-        	
         }
     };
     
@@ -81,13 +77,6 @@ public class IngredientActivity extends SherlockActivity {
 	   	
 	   	cur.close();
 	   	dbHelper.close();
-	
-			/*
-			//Create the search view
-	       SearchView searchView = new SearchView(getSupportActionBar().getThemedContext());
-	       searchView.setQueryHint("Search for Recipes");
-	*/
-	   	
 	
 	       return super.onCreateOptionsMenu(menu);
    }
@@ -147,6 +136,15 @@ public class IngredientActivity extends SherlockActivity {
        }
    }
    
+	@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        
+        VARIABLES.navigationBarHeight = textView1.getHeight();
+        VARIABLES.ingredientButtonWidth = ingredientButton.getWidth();
+        VARIABLES.methodButtonWidth = methodButton.getWidth();
+	}
+   
     public void onCreate(Bundle savedInstanceState) {
 
     	super.onCreate(savedInstanceState);
@@ -155,6 +153,11 @@ public class IngredientActivity extends SherlockActivity {
 
         setContentView(R.layout.list_ingredients);
         
+        textView1 = (TextView)findViewById(R.id.textView1);
+        ingredientButton = (Button)findViewById(R.id.button1);
+        methodButton = (Button)findViewById(R.id.methodButton);
+        
+        
         /*
          * This will enable back button image in action bar home button.
          */
@@ -162,7 +165,6 @@ public class IngredientActivity extends SherlockActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         
         this.facebookConnector = new FacebookConnector(VARIABLES.FACEBOOK_APPID, this, getApplicationContext(), new String[] {VARIABLES.FACEBOOK_PERMISSION});
-        final Context c = this;
         
         Intent intent = getIntent();
         ARRAY.ingredients = intent.getStringArrayExtra("INGREDIENTS");
@@ -266,7 +268,6 @@ public class IngredientActivity extends SherlockActivity {
     
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.out.println("Inside OnActivityResult");
 		this.facebookConnector.getFacebook().authorizeCallback(requestCode, resultCode, data);
 	}
 	

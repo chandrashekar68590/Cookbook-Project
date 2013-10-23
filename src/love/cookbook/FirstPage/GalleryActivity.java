@@ -1,23 +1,13 @@
 package love.cookbook.FirstPage;
 
-import love.cookbook.FirstPage.util.IabHelper;
-import love.cookbook.FirstPage.util.IabResult;
-import love.cookbook.FirstPage.util.Inventory;
-import love.cookbook.FirstPage.util.Purchase;
-
+import love.cookbook.FirstPage.util.*;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
+import android.content.*;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.*;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.*;
@@ -204,7 +194,7 @@ public class GalleryActivity extends SherlockActivity {
 	
     public void setUpBillingConnection(){
     	VARIABLES.mHelper = new IabHelper(this, VARIABLES.base64EncodedPublicKey);
-        
+        System.out.println("Inside setUpBilling");
     	VARIABLES.mHelper.startSetup(new 
 		IabHelper.OnIabSetupFinishedListener() {
 			@Override
@@ -308,11 +298,15 @@ public class GalleryActivity extends SherlockActivity {
     	unbindDrawables(findViewById(R.id.RootView));
         System.gc();
         
-        /*
+        /* UNCOMMENT BEFORE RELEASE
+        for(int i =0;i<ARRAY.bitmapImages.length;i++)
+        	ARRAY.bitmapImages[i].recycle();
+        */
+        
         if (VARIABLES.mHelper != null) 
         	VARIABLES.mHelper.dispose();
         VARIABLES.mHelper = null; 
-        */
+        
     }
     
     private void unbindDrawables(View view) {

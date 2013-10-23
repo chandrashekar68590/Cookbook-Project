@@ -1,6 +1,5 @@
 package love.cookbook.FirstPage;
 
-import love.cookbook.FirstPage.ImageAdapter.ViewHolder;
 import android.app.Activity;
 import android.content.Context;
 import android.view.*;

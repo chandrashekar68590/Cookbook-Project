@@ -4,12 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 	public class LazyAdapter extends BaseAdapter {
 	    
@@ -19,7 +15,6 @@ import android.widget.TextView;
 	    private String[] timeToPrepare;
 	    private String[] lock;
 	    private String[] nonVeg;
-	    private int [] images;
 	    private Bitmap [] bitmapImages;
 	    ViewHolder holder;
 	    private static LayoutInflater inflater=null; 
@@ -32,7 +27,6 @@ import android.widget.TextView;
 	    public LazyAdapter(Activity a, String[] dishes, String[] recipeDescription,String[] timeToPrepare,Bitmap [] bitmapImages,String [] lock,String [] nonVeg) {
 	    	activity = a;
 	        this.dishes=dishes;
-	        this.images=images;
 	        this.recipeDescripion=recipeDescription;
 	        this.timeToPrepare=timeToPrepare;
 	        this.lock=lock;

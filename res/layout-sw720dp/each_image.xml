@@ -21,28 +21,6 @@
          android:adjustViewBounds="true"
          android:scaleType="fitXY"
          android:src="@drawable/gallery_page_bottom1" />
-
-     <TextView
-         android:id="@+id/preperationTimeTextView"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentLeft="true"
-         android:layout_alignTop="@+id/imageView1"
-         android:layout_marginLeft="44dp"
-         android:text="About an hour"
-         android:textAppearance="?android:attr/textAppearanceSmall"
-         android:textColor="@android:color/black"
-         android:textSize="12sp"
-         android:textStyle="bold" />
-
-     <ImageView
-         android:id="@+id/vegNonVegImageView"
-         android:layout_width="10dp"
-         android:layout_height="10dp"
-         android:layout_alignBottom="@+id/preperationTimeTextView"
-         android:layout_alignParentLeft="true"
-         android:layout_marginLeft="23dp"
-         android:src="@drawable/veg_symbol" />
      
           <ImageView
          android:id="@+id/lockImageView"
@@ -51,5 +29,26 @@
          android:layout_alignBottom="@+id/imageView"
          android:layout_alignRight="@+id/imageView"
          />
+
+         <ImageView
+         android:id="@+id/vegNonVegImageView"
+         android:layout_width="8dp"
+         android:layout_height="8dp"
+         android:layout_alignParentLeft="true"
+         android:layout_marginLeft="14dp"
+         android:layout_marginTop="144dp"
+         android:src="@drawable/veg_symbol" />
+
+     <TextView
+         android:id="@+id/preperationTimeTextView"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="29dp"
+         android:layout_marginTop="140dp"
+         android:text="Around an hour"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textColor="@android:color/black"
+         android:textSize="12sp"
+         android:textStyle="bold" />
 
 </RelativeLayout>
